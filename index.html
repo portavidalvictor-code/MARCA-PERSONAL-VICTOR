@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victor — Presencia que domina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0A0A0A;
+      --bg2: #111111;
+      --text: #F0F0EC;
+      --muted: #555555;
+      --accent: #C4FF00;
+      --border: #1E1E1E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* GRAIN OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-color: var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .nav-logo svg { width: 32px; height: 36px; }
+
+    .nav-logo span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.15em;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #0A0A0A !important;
+      padding: 10px 24px;
+      font-weight: 500 !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-cta:hover { background: #d4ff20 !important; color: #0A0A0A !important; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 48px;
+      gap: 60px;
+      position: relative;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #firma-v {
+      width: min(380px, 90vw);
+      height: auto;
+    }
+
+    .stroke-left {
+      stroke-dasharray: 250;
+      stroke-dashoffset: 250;
+      animation: draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+
+    .stroke-right {
+      stroke-dasharray: 320;
+      stroke-dashoffset: 320;
+      animation: draw 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .hero-text { padding-top: 40px; }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.4s forwards;
+    }
+
+    .hero-tagline {
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.5;
+      color: #AAAAAA;
+      max-width: 420px;
+      margin-bottom: 48px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.6s forwards;
+    }
+
+    .hero-tagline strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #0A0A0A;
+      padding: 16px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn-primary:hover { background: #d4ff20; transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 16px 32px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--text); transform: translateY(-2px); }
+
+    /* SECTIONS */
+    section { padding: 120px 48px; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      color: #777;
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 480px;
+      margin-bottom: 64px;
+    }
+
+    /* SERVICES */
+    #services { border-top: 1px solid var(--border); }
+
+    .services-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 80px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 52px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .service-card:hover { background: var(--bg2); }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .service-card:hover::after { width: 100%; }
+
+    .service-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .service-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+
+    .service-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #777;
+    }
+
+    /* FOR WHO */
+    #forwho { border-top: 1px solid var(--border); }
+
+    .forwho-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .clients-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .client-tag {
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .client-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ABOUT */
+    #about {
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .about-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .about-v-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-v-glow {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(circle at center, rgba(196,255,0,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .about-v-border {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+    }
+
+    .about-v-border-outer {
+      position: absolute;
+      inset: -20px;
+      border: 1px solid #161616;
+      border-radius: 50%;
+    }
+
+    .stat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.5;
+    }
+
+    .about-bio {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #AAAAAA;
+      font-weight: 300;
+    }
+
+    .about-bio strong { color: var(--text); font-weight: 500; }
+
+    /* CONTACT */
+    #contact {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(196,255,0,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+
+    .contact-title span { color: var(--accent); }
+
+    .contact-sub {
+      font-size: 18px;
+      color: #777;
+      margin-bottom: 56px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.15em;
+    }
+
+    .footer-logo svg { width: 20px; height: 24px; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* REVEAL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+      .hero-visual { display: none; }
+      .hero-ctas { justify-content: center; }
+      section { padding: 80px 24px; }
+      .services-header { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .forwho-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .about-visual { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">
+      <svg viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="4" y1="4" x2="30" y2="58" stroke="white" stroke-width="3"/>
+        <line x1="56" y1="4" x2="30" y2="58" x2="38" y2="68" stroke="white" stroke-width="4"/>
+        <polyline points="56,4 30,58 38,68" stroke="white" stroke-width="4" fill="none"/>
+      </svg>
+      <span>VICTOR</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#forwho">Para quién</a></li>
+      <li><a href="#about">Sobre mí</a></li>
+      <li><a href="#contact" class="nav-cta">Contactar</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-visual">
+      <svg id="firma-v" viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Left stroke: thin -->
+        <line class="stroke-left" x1="20" y1="20" x2="148" y2="264" stroke="white" stroke-width="2" stroke-linecap="square"/>
+        <!-- Right stroke: thick, extends past vertex -->
+        <polyline class="stroke-right" points="280,20 148,264 182,310" stroke="white" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+        <!-- Diamond at vertex -->
+        <rect x="140" y="256" width="16" height="16" fill="white" transform="rotate(45 148 264)"/>
+      </svg>
+    </div>
+
+    <div class="hero-text">
+      <p class="hero-label">Diseño web · Automatización · IA</p>
+      <h1 class="hero-name">VICTOR</h1>
+      <p class="hero-tagline">
+        <strong>Transformo negocios locales</strong> en experiencias digitales que no se olvidan.
+      </p>
+      <div class="hero-ctas">
+        <a href="https://wa.me/TUNUMERO" target="_blank" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/></svg>
+          WhatsApp
+        </a>
+        <a href="mailto:portavidalvictor@gmail.com" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,14 22,4"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header reveal">
+      <div>
+        <p class="section-label">Lo que hago</p>
+        <h2 class="section-title">Servicios que<br/>mueven negocios</h2>
+      </div>
+      <p class="section-sub">
+        Cada proyecto es una oportunidad de hacer que un negocio pase de invisible a imparable. Sin plantillas genéricas. Sin resultados mediocres.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <p class="service-num">01</p>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="6" width="36" height="28" rx="2"/>
+          <line x1="2" y1="14" x2="38" y2="14"/>
+          <circle cx="8" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+          <circle cx="14" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+          <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>
+        <h3 class="service-name">Diseño Web</h3>
+        <p class="service-desc">Páginas que paran el scroll. Visuales 3D, animaciones de impacto y experiencias que convierten visitantes en clientes desde el primer segundo.</p>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay: 0.1s">
+        <p class="service-num">02</p>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="4" width="28" height="22" rx="2"/>
+          <line x1="10" y1="11" x2="22" y2="11"/>
+          <line x1="10" y1="17" x2="18" y2="17"/>
+          <path d="M14 26 L14 34 L26 34"/>
+          <circle cx="30" cy="34" r="4"/>
+        </svg>
+        <h3 class="service-name">Chatbots con IA</h3>
+        <p class="service-desc">Agentes inteligentes que atienden a tus clientes 24/7, responden preguntas y gestionan reservas automáticamente. Nunca pierdas una oportunidad.</p>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay: 0.2s">
+        <p class="service-num">03</p>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="20" r="4"/>
+          <circle cx="32" cy="8" r="4"/>
+          <circle cx="32" cy="32" r="4"/>
+          <line x1="12" y1="18" x2="28" y2="10"/>
+          <line x1="12" y1="22" x2="28" y2="30"/>
+        </svg>
+        <h3 class="service-name">Automatización</h3>
+        <p class="service-desc">Elimina tareas repetitivas. Conecta tus herramientas, automatiza seguimientos y deja que la tecnología trabaje mientras tú te enfocas en crecer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHO -->
+  <section id="forwho">
+    <div class="forwho-inner">
+      <div class="reveal">
+        <p class="section-label">Para quién</p>
+        <h2 class="section-title">Negocios reales.<br/>Presencia élite.</h2>
+        <p class="section-sub">
+          Trabajo con negocios locales que quieren dejar de pasar desapercibidos y empezar a dominar su sector digitalmente.
+        </p>
+      </div>
+      <div class="clients-list reveal">
+        <span class="client-tag">Barberías</span>
+        <span class="client-tag">Peluquerías</span>
+        <span class="client-tag">Dentistas</span>
+        <span class="client-tag">Fisioterapeutas</span>
+        <span class="client-tag">Gimnasios</span>
+        <span class="client-tag">Clínicas estéticas</span>
+        <span class="client-tag">Restaurantes</span>
+        <span class="client-tag">Tiendas locales</span>
+        <span class="client-tag">Academias</span>
+        <span class="client-tag">Cualquier negocio</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="reveal">
+        <p class="section-label">Sobre mí</p>
+        <h2 class="section-title">Formal.<br/>Obsesionado<br/>con mejorar.</h2>
+        <p class="about-bio" style="margin-top: 32px;">
+          Soy Victor. <strong>Diseño experiencias digitales que hacen que los negocios locales compitan al nivel de las grandes marcas.</strong>
+          <br/><br/>
+          Cada día estudio, experimento y mejoro. No vendo plantillas — construyo presencias digitales que generan resultados reales, con tecnología punta y atención obsesiva al detalle.
+        </p>
+
+        <div class="stat-list" style="margin-top: 48px;">
+          <div class="stat-item">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Diseños únicos,<br/>sin plantillas genéricas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">24/7</span>
+            <span class="stat-label">Chatbots activos que<br/>nunca duermen</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Ganas de que<br/>tu negocio crezca</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual reveal">
+        <div class="about-v-wrap">
+          <div class="about-v-glow"></div>
+          <div class="about-v-border-outer"></div>
+          <div class="about-v-border"></div>
+          <svg viewBox="0 0 120 140" width="90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="8" y1="8" x2="60" y2="110" stroke="white" stroke-width="2" stroke-linecap="square"/>
+            <polyline points="112,8 60,110 74,132" stroke="white" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+            <rect x="54" y="104" width="12" height="12" fill="white" transform="rotate(45 60 110)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label reveal" style="margin-bottom: 20px;">Hablemos</p>
+    <h2 class="contact-title reveal">
+      ¿Tu negocio listo<br/>para <span>dominar</span>?
+    </h2>
+    <p class="contact-sub reveal">
+      Una conversación puede cambiar la presencia digital de tu negocio para siempre.
+    </p>
+    <div class="contact-ctas reveal">
+      <a href="https://wa.me/TUNUMERO" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/></svg>
+        Escribir por WhatsApp
+      </a>
+      <a href="mailto:portavidalvictor@gmail.com" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,14 22,4"/></svg>
+        Enviar email
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <svg viewBox="0 0 60 70" fill="none">
+        <line x1="4" y1="4" x2="30" y2="58" stroke="white" stroke-width="2.5"/>
+        <polyline points="56,4 30,58 38,68" stroke="white" stroke-width="3.5" fill="none"/>
+      </svg>
+      VICTOR
+    </div>
+    <span class="footer-copy">Presencia que domina. Resultados que escalan.</span>
+    <span class="footer-copy">© 2025</span>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
