@@ -35,446 +35,459 @@
 
     /* CUSTOM CURSOR */
     #cursor {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
       transform: translate(-50%, -50%);
       transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
     }
     #cursor-ring {
-      position: fixed;
-      width: 32px; height: 32px;
-      border: 1px solid rgba(201,168,76,0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
+      position: fixed; width: 32px; height: 32px;
+      border: 1px solid rgba(201,168,76,0.4); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
       transform: translate(-50%, -50%);
       transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
     }
-    a:hover ~ #cursor, button:hover ~ #cursor { width: 16px; height: 16px; }
 
     /* NEURAL CANVAS */
-    #neural {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.6;
-    }
+    #neural { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
 
     /* GRAIN */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 9997;
+      opacity: 0.025; pointer-events: none; z-index: 9997;
     }
 
     /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 22px 56px;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: background 0.4s, border-color 0.4s;
-      border-bottom: 1px solid transparent;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 22px 56px; display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, border-color 0.4s; border-bottom: 1px solid transparent;
     }
-    nav.scrolled {
-      background: rgba(8,8,8,0.94);
-      backdrop-filter: blur(16px);
-      border-color: var(--border-g);
-    }
+    nav.scrolled { background: rgba(8,8,8,0.94); backdrop-filter: blur(16px); border-color: var(--border-g); }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .nav-logo svg { width: 28px; height: 34px; }
-    .nav-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 15px;
-      letter-spacing: 0.18em; color: var(--text);
-    }
+    .nav-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.18em; color: var(--text); }
     .nav-links { display: flex; gap: 40px; list-style: none; }
-    .nav-links a {
-      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.2s;
-    }
+    .nav-links a { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--gold); }
-    .nav-cta {
-      background: var(--gold) !important; color: #080808 !important;
-      padding: 9px 22px; font-weight: 500 !important;
-      transition: background 0.2s !important;
-    }
+    .nav-cta { background: var(--gold) !important; color: #080808 !important; padding: 9px 22px; font-weight: 500 !important; transition: background 0.2s !important; }
     .nav-cta:hover { background: var(--gold-b) !important; }
 
     /* HERO */
-    #hero {
-      position: relative; z-index: 1;
-      min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 0 56px; gap: 40px;
-    }
-
-    .hero-v-wrap {
-      display: flex; justify-content: center; align-items: center;
-      position: relative;
-    }
-
-    /* Scan line */
+    #hero { position: relative; z-index: 1; min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 56px; gap: 40px; }
+    .hero-v-wrap { display: flex; justify-content: center; align-items: center; position: relative; }
     .v-scanline {
-      position: absolute;
-      left: 50%; top: 10%;
-      transform: translateX(-50%);
+      position: absolute; left: 50%; top: 10%; transform: translateX(-50%);
       width: 200px; height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold-b), transparent);
-      opacity: 0;
-      animation: scanline 4s ease-in-out 3s infinite;
+      opacity: 0; animation: scanline 4s ease-in-out 3s infinite;
     }
-    @keyframes scanline {
-      0%   { top: 10%; opacity: 0; }
-      5%   { opacity: 0.8; }
-      95%  { opacity: 0.8; }
-      100% { top: 90%; opacity: 0; }
-    }
-
-    /* V glow ring */
-    .v-glow {
-      position: absolute;
-      width: 320px; height: 320px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
+    @keyframes scanline { 0% { top: 10%; opacity: 0; } 5% { opacity: 0.8; } 95% { opacity: 0.8; } 100% { top: 90%; opacity: 0; } }
+    .v-glow { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%); pointer-events: none; }
     #hero-v {
-      width: min(340px, 80vw);
-      height: auto;
-      position: relative; z-index: 1;
-      filter: drop-shadow(0 0 20px rgba(201,168,76,0.15));
+      width: min(340px, 80vw); height: auto; position: relative; z-index: 1;
+      transform-origin: 50% 50%;
+      animation: vscale 3.4s cubic-bezier(0.23,1,0.32,1) 0.1s both;
     }
-
-    .vl { /* left stroke */
-      stroke-dasharray: 260;
-      stroke-dashoffset: 260;
-      animation: vdraw 1.4s cubic-bezier(0.25,0.46,0.45,0.94) 0.4s forwards;
+    @keyframes vscale {
+      0%   { transform: scale(0.07); opacity: 0; filter: drop-shadow(0 0 2px rgba(201,168,76,0.05)); }
+      12%  { transform: scale(0.18); opacity: 0.55; }
+      32%  { transform: scale(0.46); opacity: 0.8; }
+      60%  { transform: scale(0.8); opacity: 1; }
+      82%  { transform: scale(1.0); }
+      90%  { transform: scale(1.07); filter: drop-shadow(0 0 38px rgba(201,168,76,0.35)); }
+      96%  { transform: scale(0.97); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(201,168,76,0.15)); }
     }
-    .vr { /* right stroke */
-      stroke-dasharray: 320;
-      stroke-dashoffset: 320;
-      animation: vdraw 1.6s cubic-bezier(0.25,0.46,0.45,0.94) 0.7s forwards;
-    }
+    .vghost-l { opacity: 0; animation: ghostpulse 1.4s ease 0.1s forwards; }
+    .vghost-r { opacity: 0; animation: ghostpulse 1.4s ease 0.3s forwards; }
+    @keyframes ghostpulse { 0%{opacity:0} 25%{opacity:0.18} 75%{opacity:0.06} 100%{opacity:0} }
+    .vl { stroke-dasharray: 260; stroke-dashoffset: 260; animation: vdraw 1.7s cubic-bezier(0.25,0.46,0.45,0.94) 1.0s forwards; }
+    .vr { stroke-dasharray: 320; stroke-dashoffset: 320; animation: vdraw 1.9s cubic-bezier(0.25,0.46,0.45,0.94) 1.7s forwards; }
     @keyframes vdraw { to { stroke-dashoffset: 0; } }
-
-    /* Hero text */
+    .v-diamond { opacity: 0; animation: diampop 0.5s cubic-bezier(0.34,1.56,0.64,1) 3.4s forwards; }
+    @keyframes diampop { from{opacity:0;transform:rotate(45deg) scale(0);transform-origin:148px 268px} to{opacity:1;transform:rotate(45deg) scale(1);transform-origin:148px 268px} }
     .hero-text { position: relative; z-index: 1; }
-
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid var(--border-g);
-      padding: 6px 16px; margin-bottom: 28px;
-      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); opacity: 0;
-      animation: fadeup 0.8s ease 1.6s forwards;
-    }
-    .hero-badge::before {
-      content: ''; width: 6px; height: 6px;
-      background: var(--gold); border-radius: 50%;
-      animation: pulse 2s ease-in-out 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.4); }
-    }
-
-    .hero-name {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(64px, 8vw, 110px);
-      line-height: 0.9; letter-spacing: -0.03em;
-      background: linear-gradient(135deg, var(--text) 0%, var(--gold) 60%, var(--gold-b) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      opacity: 0; animation: fadeup 0.8s ease 1.8s forwards;
-    }
-
-    .hero-tagline {
-      font-size: clamp(15px, 1.8vw, 18px); line-height: 1.6;
-      color: #888; max-width: 400px; margin: 24px 0 44px;
-      font-weight: 300;
-      opacity: 0; animation: fadeup 0.8s ease 2s forwards;
-    }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border-g); padding: 6px 16px; margin-bottom: 28px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0; animation: fadeup 0.8s ease 1.6s forwards; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s ease-in-out 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
+    .hero-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(64px, 8vw, 110px); line-height: 0.9; letter-spacing: -0.03em; background: linear-gradient(135deg, var(--text) 0%, var(--gold) 60%, var(--gold-b) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; animation: fadeup 0.8s ease 1.8s forwards; }
+    .hero-tagline { font-size: clamp(15px, 1.8vw, 18px); line-height: 1.6; color: #888; max-width: 400px; margin: 24px 0 44px; font-weight: 300; opacity: 0; animation: fadeup 0.8s ease 2s forwards; }
     .hero-tagline strong { color: var(--text); font-weight: 400; }
-
-    .hero-ctas {
-      display: flex; gap: 14px; flex-wrap: wrap;
-      opacity: 0; animation: fadeup 0.8s ease 2.2s forwards;
-    }
-
-    @keyframes fadeup {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeup 0.8s ease 2.2s forwards; }
+    @keyframes fadeup { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
     /* BUTTONS */
-    .btn-gold {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: var(--gold); color: #080808;
-      padding: 15px 30px; font-size: 13px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      text-decoration: none; border: none; cursor: none;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      position: relative; overflow: hidden;
-    }
-    .btn-gold::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-      transform: translateX(-100%); transition: transform 0.5s;
-    }
+    .btn-gold { display: inline-flex; align-items: center; gap: 9px; background: var(--gold); color: #080808; padding: 15px 30px; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border: none; cursor: none; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+    .btn-gold::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); transform: translateX(-100%); transition: transform 0.5s; }
     .btn-gold:hover { background: var(--gold-b); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.25); }
     .btn-gold:hover::after { transform: translateX(100%); }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 9px;
-      border: 1px solid var(--border-g); color: var(--gold);
-      padding: 15px 30px; font-size: 13px; font-weight: 400;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      text-decoration: none; cursor: none;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
-    }
+    .btn-outline { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--border-g); color: var(--gold); padding: 15px 30px; font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: none; transition: border-color 0.2s, transform 0.2s, background 0.2s; }
     .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); transform: translateY(-2px); }
 
     /* SECTION BASE */
     section { position: relative; z-index: 1; padding: 120px 56px; }
-
-    .s-label {
-      font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 14px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .s-label::before {
-      content: ''; display: block; width: 28px; height: 1px; background: var(--gold);
-    }
-
-    .s-title {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(34px, 4.5vw, 60px);
-      line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px;
-    }
-
-    .s-sub {
-      color: #666; font-size: 15px; line-height: 1.7;
-      max-width: 440px; margin-bottom: 60px;
-    }
-
-    /* DIVIDER LINE */
-    .divider {
-      width: 100%; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-g), var(--border), var(--border-g), transparent);
-    }
+    .s-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+    .s-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+    .s-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(34px, 4.5vw, 60px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 18px; }
+    .s-sub { color: #666; font-size: 15px; line-height: 1.7; max-width: 440px; margin-bottom: 60px; }
+    .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-g), var(--border), var(--border-g), transparent); }
 
     /* SERVICES */
     #services { border-top: 1px solid var(--border); }
-
-    .svc-header {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-      align-items: end; margin-bottom: 64px;
-    }
-
-    .svc-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .svc-card {
-      background: var(--bg); padding: 50px 38px;
-      position: relative; overflow: hidden;
-      transition: background 0.3s;
-    }
+    .svc-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .svc-card { background: var(--bg); padding: 50px 38px; position: relative; overflow: hidden; transition: background 0.3s; }
     .svc-card:hover { background: var(--bg2); }
-
-    /* Gold bottom line */
-    .svc-card::after {
-      content: ''; position: absolute; bottom: 0; left: 0;
-      height: 1px; width: 0; background: var(--gold);
-      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
+    .svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; height: 1px; width: 0; background: var(--gold); transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
     .svc-card:hover::after { width: 100%; }
-
-    /* Top gold corner accent */
-    .svc-card::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 0; height: 1px; background: var(--gold);
-      transition: width 0.5s cubic-bezier(0.4,0,0.2,1) 0.1s;
-    }
+    .svc-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.5s cubic-bezier(0.4,0,0.2,1) 0.1s; }
     .svc-card:hover::before { width: 40%; }
-
-    .svc-num {
-      font-family: 'Syne', sans-serif; font-size: 11px;
-      letter-spacing: 0.2em; color: var(--gold-d);
-      margin-bottom: 36px;
-    }
-
-    .svc-icon {
-      width: 38px; height: 38px;
-      color: var(--gold); margin-bottom: 22px;
-      transition: transform 0.3s;
-    }
+    .svc-num { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: var(--gold-d); margin-bottom: 36px; }
+    .svc-icon { width: 38px; height: 38px; color: var(--gold); margin-bottom: 22px; transition: transform 0.3s; }
     .svc-card:hover .svc-icon { transform: scale(1.1); }
-
-    .svc-name {
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 20px; letter-spacing: -0.01em; margin-bottom: 14px;
-    }
+    .svc-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 14px; }
     .svc-desc { font-size: 13px; line-height: 1.75; color: #666; }
+
+    /* N8N EXAMPLE */
+    .n8n-block {
+      margin-top: 60px; border: 1px solid var(--border-g);
+      padding: 40px; background: var(--bg2);
+    }
+    .n8n-title {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .n8n-sub { font-size: 12px; color: #555; margin-bottom: 36px; letter-spacing: 0.05em; }
+    .n8n-flow {
+      display: flex; align-items: center; gap: 0; overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .n8n-node {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px; flex-shrink: 0;
+    }
+    .n8n-box {
+      border: 1px solid var(--border-g); background: var(--bg3);
+      padding: 14px 20px; min-width: 120px; text-align: center;
+      position: relative; transition: border-color 0.3s;
+    }
+    .n8n-box:hover { border-color: var(--gold); }
+    .n8n-box-icon { font-size: 20px; margin-bottom: 6px; }
+    .n8n-box-name { font-size: 11px; font-weight: 500; color: var(--text); }
+    .n8n-box-type { font-size: 10px; color: #444; margin-top: 3px; letter-spacing: 0.05em; }
+    .n8n-box.trigger { border-color: rgba(201,168,76,0.3); }
+    .n8n-box.ai-node { border-color: rgba(139,105,20,0.4); }
+    .n8n-arrow {
+      display: flex; align-items: center; flex-shrink: 0; padding: 0 4px;
+    }
+    .n8n-arrow svg { color: var(--gold-d); }
+    .n8n-connector {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 0 2px; flex-shrink: 0;
+    }
+    .n8n-line-v { width: 1px; height: 24px; background: var(--border-g); }
+    .n8n-label { font-size: 9px; color: #3a3a3a; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* PORTFOLIO */
+    #portfolio { border-top: 1px solid var(--border); background: var(--bg2); }
+    .port-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 56px; }
+    .port-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .port-card {
+      border: 1px solid var(--border); background: var(--bg);
+      overflow: hidden; transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+    }
+    .port-card:hover { border-color: var(--border-g); transform: translateY(-4px); }
+    .port-preview {
+      width: 100%; height: 220px; background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .port-preview-inner {
+      width: 85%; height: 80%;
+      border: 1px solid var(--border-g);
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .port-browser-bar {
+      height: 20px; background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; padding: 0 8px; gap: 4px;
+    }
+    .port-browser-bar span { width: 6px; height: 6px; border-radius: 50%; }
+    .port-browser-bar span:nth-child(1) { background: #ff5f57; }
+    .port-browser-bar span:nth-child(2) { background: #febc2e; }
+    .port-browser-bar span:nth-child(3) { background: #28c840; }
+    .port-preview-content { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .port-preview-bar { height: 6px; background: var(--border-g); border-radius: 2px; }
+    .port-preview-bar.gold { background: rgba(201,168,76,0.3); width: 60%; }
+    .port-preview-bar.short { width: 40%; }
+    .port-preview-bar.med { width: 70%; }
+    .port-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
+    .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
+    .port-tag-overlay {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--gold); color: #080808;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 4px 10px;
+    }
+    .port-info { padding: 28px 30px; }
+    .port-tags { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+    .port-chip { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border-g); color: var(--gold-d); padding: 3px 10px; }
+    .port-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 8px; }
+    .port-desc { font-size: 13px; color: #666; line-height: 1.7; margin-bottom: 20px; }
+    .port-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      border-bottom: 1px solid var(--border-g); padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .port-link:hover { border-color: var(--gold); }
+    .port-link svg { transition: transform 0.2s; }
+    .port-link:hover svg { transform: translateX(3px); }
 
     /* FOR WHO */
     #forwho { border-top: 1px solid var(--border); }
-
-    .fw-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-    }
-
+    .fw-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
     .clients-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
-
-    .c-tag {
-      border: 1px solid var(--border-g); padding: 10px 20px;
-      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: #666; transition: all 0.25s;
-      opacity: 0; transform: translateY(16px);
-    }
-    .c-tag.visible {
-      animation: tagIn 0.5s ease forwards;
-    }
-    @keyframes tagIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .c-tag { border: 1px solid var(--border-g); padding: 10px 20px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; transition: all 0.25s; opacity: 0; transform: translateY(16px); }
+    .c-tag.visible { animation: tagIn 0.5s ease forwards; }
+    @keyframes tagIn { to { opacity: 1; transform: translateY(0); } }
     .c-tag:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px) !important; }
+
+    /* REVIEWS */
+    #reviews { border-top: 1px solid var(--border); }
+    .rev-header { display: grid; grid-template-columns: 1fr auto; align-items: end; margin-bottom: 56px; gap: 32px; }
+    .stars-display { display: flex; gap: 3px; margin-bottom: 12px; }
+    .star-icon { color: var(--gold); font-size: 16px; }
+    .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 40px; }
+    .rev-card { background: var(--bg2); padding: 36px 30px; position: relative; }
+    .rev-stars { display: flex; gap: 2px; margin-bottom: 18px; }
+    .rev-star { color: var(--gold); font-size: 14px; }
+    .rev-text { font-size: 14px; line-height: 1.8; color: #888; margin-bottom: 24px; font-style: italic; }
+    .rev-text::before { content: '"'; color: var(--gold); font-size: 28px; font-family: 'Syne', sans-serif; line-height: 0; vertical-align: -10px; margin-right: 4px; }
+    .rev-author { display: flex; align-items: center; gap: 12px; }
+    .rev-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gold-dim); border: 1px solid var(--border-g); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; color: var(--gold); }
+    .rev-name { font-size: 13px; font-weight: 500; }
+    .rev-biz { font-size: 11px; color: #555; letter-spacing: 0.05em; }
+    .rev-improvement { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gold-d); }
+    .rev-improvement strong { color: var(--gold); font-weight: 500; }
+    .rev-cta { text-align: center; }
+    .rev-cta p { font-size: 14px; color: #555; margin-bottom: 18px; }
 
     /* ABOUT */
     #about { border-top: 1px solid var(--border); background: var(--bg2); }
-
-    .ab-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 100px; align-items: center;
-    }
-
-    .ab-bio {
-      font-size: 17px; line-height: 1.8; color: #888; margin-top: 28px;
-    }
+    .ab-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+    .ab-bio { font-size: 17px; line-height: 1.8; color: #888; margin-top: 28px; }
     .ab-bio strong { color: var(--text); font-weight: 400; }
-
     .stats { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
-
-    .stat {
-      display: flex; align-items: center; gap: 24px;
-      padding: 26px 0; border-bottom: 1px solid var(--border);
-    }
+    .stat { display: flex; align-items: center; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--border); }
     .stat:first-child { border-top: 1px solid var(--border); }
-
-    .stat-n {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: 38px; color: var(--gold); line-height: 1;
-      letter-spacing: -0.03em; min-width: 90px;
-    }
+    .stat-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 38px; color: var(--gold); line-height: 1; letter-spacing: -0.03em; min-width: 90px; }
     .stat-l { font-size: 13px; color: #666; line-height: 1.5; }
-
-    /* V circle */
-    .ab-visual {
-      display: flex; justify-content: center; align-items: center;
-    }
-    .v-circle {
-      position: relative; width: 260px; height: 260px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .vc-ring1, .vc-ring2, .vc-ring3 {
-      position: absolute; border-radius: 50%; border: 1px solid;
-    }
+    .ab-visual { display: flex; justify-content: center; align-items: center; }
+    .v-circle { position: relative; width: 260px; height: 260px; display: flex; align-items: center; justify-content: center; }
+    .vc-ring1, .vc-ring2, .vc-ring3 { position: absolute; border-radius: 50%; border: 1px solid; }
     .vc-ring1 { inset: 0; border-color: var(--border-g); }
     .vc-ring2 { inset: -16px; border-color: var(--border); }
     .vc-ring3 { inset: -32px; border-color: #111; }
-    .vc-glow {
-      position: absolute; inset: -20px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);
-    }
-    .vc-dot {
-      position: absolute; width: 4px; height: 4px;
-      background: var(--gold); border-radius: 50%;
-      top: -2px; left: 50%; transform: translateX(-50%);
-      animation: orbitdot 6s linear infinite;
-    }
-    @keyframes orbitdot {
-      from { transform: translateX(-50%) rotate(0deg) translateY(-130px); }
-      to   { transform: translateX(-50%) rotate(360deg) translateY(-130px); }
-    }
+    .vc-glow { position: absolute; inset: -20px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%); }
+    .vc-dot { position: absolute; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; top: -2px; left: 50%; transform: translateX(-50%); animation: orbitdot 6s linear infinite; }
+    @keyframes orbitdot { from { transform: translateX(-50%) rotate(0deg) translateY(-130px); } to { transform: translateX(-50%) rotate(360deg) translateY(-130px); } }
     .vc-v { position: relative; z-index: 1; }
 
     /* CONTACT */
-    #contact { border-top: 1px solid var(--border); text-align: center; overflow: hidden; }
+    #contact { border-top: 1px solid var(--border); overflow: hidden; }
+    .contact-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 60%); pointer-events: none; }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .ct-left { position: relative; z-index: 1; }
+    .ct-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(38px, 4.5vw, 60px); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; }
+    .ct-title em { font-style: normal; background: linear-gradient(90deg, var(--gold), var(--gold-b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .ct-sub { font-size: 15px; color: #666; margin-bottom: 36px; line-height: 1.7; max-width: 380px; }
+    .ct-direct { display: flex; flex-direction: column; gap: 12px; }
+    .ct-direct a { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border: 1px solid var(--border-g); text-decoration: none; color: var(--text); font-size: 13px; transition: border-color 0.2s, background 0.2s; }
+    .ct-direct a:hover { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+    .ct-direct a svg { color: var(--gold); flex-shrink: 0; }
+    .ct-direct a span { color: #555; font-size: 11px; margin-left: auto; }
 
-    .contact-glow {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 60%);
-      pointer-events: none;
+    /* CONTACT FORM */
+    .ct-form { position: relative; z-index: 1; }
+    .form-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .form-sub { font-size: 12px; color: #555; margin-bottom: 28px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #555; margin-bottom: 7px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; background: var(--bg2); border: 1px solid var(--border);
+      color: var(--text); padding: 12px 16px; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 300; outline: none;
+      transition: border-color 0.2s; resize: none;
     }
-
-    .ct-title {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(38px, 5.5vw, 72px);
-      line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px;
-      position: relative; z-index: 1;
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--border-g); }
+    .form-group select { cursor: none; }
+    .form-group select option { background: var(--bg3); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-btn {
+      width: 100%; padding: 15px; background: var(--gold); color: #080808;
+      border: none; font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+      cursor: none; transition: background 0.2s; margin-top: 8px;
     }
-    .ct-title em {
-      font-style: normal;
-      background: linear-gradient(90deg, var(--gold), var(--gold-b));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .ct-sub {
-      font-size: 16px; color: #666; margin-bottom: 52px;
-      max-width: 420px; margin-left: auto; margin-right: auto;
-      position: relative; z-index: 1;
-    }
-
-    .ct-ctas {
-      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-      position: relative; z-index: 1; margin-bottom: 80px;
-    }
+    .form-btn:hover { background: var(--gold-b); }
+    .form-success { display: none; text-align: center; padding: 40px 20px; }
+    .form-success-icon { font-size: 32px; margin-bottom: 12px; }
+    .form-success h3 { font-family: 'Syne', sans-serif; font-size: 18px; color: var(--gold); margin-bottom: 8px; }
+    .form-success p { font-size: 13px; color: #666; }
 
     /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 56px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: relative; z-index: 1;
-    }
-    .ft-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: 13px; letter-spacing: 0.15em; color: var(--text);
-    }
+    footer { border-top: 1px solid var(--border); padding: 28px 56px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+    .ft-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; color: var(--text); }
     .ft-logo svg { width: 18px; height: 22px; }
     .ft-copy { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
     .ft-gold { font-size: 11px; color: var(--gold-d); letter-spacing: 0.1em; }
 
     /* REVEAL */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
     /* SCROLLBAR */
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--gold-d); }
+
+    /* ===================== ADMIN PANEL ===================== */
+    #admin-panel {
+      display: none; position: fixed; inset: 0; z-index: 10000;
+      background: #050505; overflow-y: auto;
+      font-family: 'DM Sans', sans-serif;
+    }
+    #admin-panel.open { display: block; }
+    .admin-nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(5,5,5,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-g);
+      padding: 16px 40px; display: flex; align-items: center; gap: 24px;
+    }
+    .admin-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; color: var(--gold); flex: 1; }
+    .admin-logo span { color: #444; font-weight: 300; font-size: 11px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.2em; }
+    .admin-tabs { display: flex; gap: 4px; }
+    .admin-tab {
+      padding: 8px 20px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid transparent; color: #555; cursor: none; background: none;
+      transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .admin-tab.active { border-color: var(--border-g); color: var(--gold); background: var(--gold-dim); }
+    .admin-tab:hover:not(.active) { color: var(--text); border-color: var(--border); }
+    .admin-close {
+      padding: 8px 16px; border: 1px solid var(--border); background: none;
+      color: #555; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: none; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    }
+    .admin-close:hover { color: var(--text); border-color: #444; }
+    .admin-body { padding: 40px; max-width: 1100px; margin: 0 auto; }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+
+    /* Admin — Contacts */
+    .admin-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+    .admin-kpi { border: 1px solid var(--border); padding: 22px 24px; background: var(--bg2); }
+    .admin-kpi-n { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--gold); }
+    .admin-kpi-l { font-size: 11px; color: #555; margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .admin-contacts-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .admin-contact-card { background: var(--bg2); padding: 24px 28px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
+    .admin-contact-card:hover { background: var(--bg3); }
+    .acc-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .acc-meta { font-size: 12px; color: #666; display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+    .acc-meta span { display: flex; align-items: center; gap: 5px; }
+    .acc-msg { font-size: 13px; color: #888; line-height: 1.6; border-left: 2px solid var(--border-g); padding-left: 12px; margin-top: 8px; }
+    .acc-actions { display: flex; gap: 8px; flex-direction: column; }
+    .acc-btn { padding: 8px 14px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid; cursor: none; background: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap; }
+    .acc-btn.wa { border-color: rgba(201,168,76,0.3); color: var(--gold); }
+    .acc-btn.wa:hover { background: rgba(201,168,76,0.08); }
+    .acc-btn.del { border-color: var(--border); color: #444; }
+    .acc-btn.del:hover { border-color: #dc2626; color: #dc2626; }
+    .acc-date { font-size: 10px; color: #333; }
+    .acc-service-tag { display: inline-block; border: 1px solid var(--border-g); font-size: 10px; color: var(--gold-d); padding: 2px 8px; letter-spacing: 0.08em; }
+    .admin-empty { text-align: center; padding: 60px; color: #333; font-size: 13px; }
+    .admin-empty span { display: block; font-size: 28px; margin-bottom: 12px; color: #2a2a2a; }
+
+    /* Admin — Reviews */
+    .admin-reviews-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .admin-rev-card { background: var(--bg2); padding: 24px 28px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
+    .arev-stars { display: flex; gap: 2px; margin-bottom: 8px; }
+    .arev-star { color: var(--gold); font-size: 13px; }
+    .arev-text { font-size: 13px; color: #888; line-height: 1.6; font-style: italic; margin-bottom: 10px; }
+    .arev-meta { font-size: 11px; color: #555; }
+    .arev-status { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border: 1px solid; }
+    .arev-status.pending { border-color: rgba(201,168,76,0.3); color: var(--gold-d); }
+    .arev-status.approved { border-color: rgba(39,174,96,0.3); color: #27ae60; }
+    .arev-actions { display: flex; gap: 6px; margin-top: 12px; }
+    .arev-btn { padding: 6px 12px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid; cursor: none; background: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+    .arev-btn.approve { border-color: rgba(39,174,96,0.3); color: #27ae60; }
+    .arev-btn.approve:hover { background: rgba(39,174,96,0.08); }
+    .arev-btn.reject { border-color: var(--border); color: #444; }
+    .arev-btn.reject:hover { border-color: #dc2626; color: #dc2626; }
+
+    /* ===================== ROI CALCULATOR ===================== */
+    .roi-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .roi-form-panel { background: var(--bg2); border: 1px solid var(--border); padding: 32px; }
+    .roi-result-panel { background: var(--bg2); border: 1px solid var(--border-g); padding: 32px; position: sticky; top: 88px; }
+    .roi-section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .roi-group { margin-bottom: 18px; }
+    .roi-group label { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #555; margin-bottom: 7px; }
+    .roi-group input, .roi-group select, .roi-group textarea {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text); padding: 11px 14px; font-family: 'DM Sans', sans-serif;
+      font-size: 13px; outline: none; transition: border-color 0.2s; resize: none;
+    }
+    .roi-group input:focus, .roi-group select:focus, .roi-group textarea:focus { border-color: var(--border-g); }
+    .roi-group select option { background: var(--bg3); }
+    .roi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .roi-calc-btn { width: 100%; padding: 14px; background: var(--gold); color: #080808; border: none; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; cursor: none; transition: background 0.2s; margin-top: 4px; }
+    .roi-calc-btn:hover { background: var(--gold-b); }
+
+    /* ROI Results */
+    .roi-empty { text-align: center; padding: 40px 0; color: #333; font-size: 13px; }
+    .roi-empty span { display: block; font-size: 36px; margin-bottom: 12px; color: #2a2a2a; }
+    .roi-result-content { display: none; }
+    .roi-result-content.show { display: block; }
+    .roi-headline { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .roi-big-number { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 42px; color: var(--gold-b); line-height: 1; margin-bottom: 4px; }
+    .roi-big-sub { font-size: 12px; color: #555; margin-bottom: 28px; }
+    .roi-metrics { display: flex; flex-direction: column; gap: 1px; background: var(--border); margin-bottom: 24px; }
+    .roi-metric { background: var(--bg3); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+    .roi-metric-label { font-size: 12px; color: #666; }
+    .roi-metric-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); }
+    .roi-metric-value.green { color: #4ade80; }
+    .roi-metric-value.gold { color: var(--gold); }
+    .roi-metric-value.red { color: #f87171; }
+    .roi-pitch { background: var(--gold-dim); border: 1px solid var(--border-g); padding: 20px; margin-bottom: 20px; }
+    .roi-pitch-title { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .roi-pitch-text { font-size: 13px; color: #aaa; line-height: 1.7; }
+    .roi-copy-btn { width: 100%; padding: 12px; border: 1px solid var(--border-g); background: none; color: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: none; transition: all 0.2s; }
+    .roi-copy-btn:hover { background: rgba(201,168,76,0.08); }
+
+    /* MODAL — Review form */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 5000;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--bg2); border: 1px solid var(--border-g); padding: 44px; width: 100%; max-width: 520px; position: relative; }
+    .modal-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; margin-bottom: 6px; }
+    .modal-sub { font-size: 13px; color: #555; margin-bottom: 28px; }
+    .modal-close { position: absolute; top: 16px; right: 18px; background: none; border: none; color: #555; font-size: 20px; cursor: none; line-height: 1; }
+    .modal-close:hover { color: var(--text); }
+    .star-picker { display: flex; gap: 8px; margin-bottom: 4px; }
+    .star-pick { font-size: 28px; cursor: none; color: #333; transition: color 0.15s; }
+    .star-pick.active { color: var(--gold); }
 
     /* MOBILE */
     @media (max-width: 900px) {
@@ -486,20 +499,22 @@
       .hero-v-wrap { display: none; }
       .hero-ctas { justify-content: center; }
       section { padding: 80px 24px; }
-      .svc-header, .fw-inner, .ab-inner { grid-template-columns: 1fr; gap: 48px; }
-      .svc-grid { grid-template-columns: 1fr; }
+      .svc-header, .fw-inner, .ab-inner, .port-header, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .svc-grid, .port-grid, .rev-grid { grid-template-columns: 1fr; }
       .ab-visual { display: none; }
       footer { flex-direction: column; gap: 10px; text-align: center; }
+      .roi-layout { grid-template-columns: 1fr; }
+      .admin-kpis { grid-template-columns: 1fr 1fr; }
+      .admin-body { padding: 20px; }
+      .form-row, .roi-row { grid-template-columns: 1fr; }
+      .rev-header { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-
-<!-- NEURAL NETWORK CANVAS -->
 <canvas id="neural"></canvas>
 
 <!-- NAV -->
@@ -513,7 +528,8 @@
   </a>
   <ul class="nav-links">
     <li><a href="#services">Servicios</a></li>
-    <li><a href="#forwho">Para quién</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#reviews">Valoraciones</a></li>
     <li><a href="#about">Sobre mí</a></li>
     <li><a href="#contact" class="nav-cta">Contactar</a></li>
   </ul>
@@ -525,20 +541,19 @@
     <div class="v-glow"></div>
     <div class="v-scanline"></div>
     <svg id="hero-v" viewBox="0 0 300 330" fill="none">
-      <line class="vl" x1="18" y1="16" x2="148" y2="268"
-            stroke="#C9A84C" stroke-width="2" stroke-linecap="square"/>
-      <polyline class="vr" points="282,16 148,268 184,318"
-            stroke="#F5D078" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
-      <rect x="140" y="260" width="16" height="16" fill="#C9A84C"
-            transform="rotate(45 148 268)"/>
-      <!-- Subtle glow duplicate -->
-      <line x1="18" y1="16" x2="148" y2="268"
-            stroke="#C9A84C" stroke-width="8" stroke-linecap="square" opacity="0.06"/>
-      <polyline points="282,16 148,268 184,318"
-            stroke="#F5D078" stroke-width="12" stroke-linecap="square" stroke-linejoin="miter" fill="none" opacity="0.06"/>
+      <!-- Ghost outlines (appear first, then fade) -->
+      <line class="vghost-l" x1="18" y1="16" x2="148" y2="268" stroke="#C9A84C" stroke-width="0.8" stroke-linecap="square" stroke-dasharray="8 6"/>
+      <polyline class="vghost-r" points="282,16 148,268 184,318" stroke="#F5D078" stroke-width="1" stroke-linecap="square" fill="none" stroke-dasharray="8 6"/>
+      <!-- Glow duplicates -->
+      <line x1="18" y1="16" x2="148" y2="268" stroke="#C9A84C" stroke-width="8" stroke-linecap="square" opacity="0.06"/>
+      <polyline points="282,16 148,268 184,318" stroke="#F5D078" stroke-width="12" stroke-linecap="square" stroke-linejoin="miter" fill="none" opacity="0.06"/>
+      <!-- Main strokes -->
+      <line class="vl" x1="18" y1="16" x2="148" y2="268" stroke="#C9A84C" stroke-width="2" stroke-linecap="square"/>
+      <polyline class="vr" points="282,16 148,268 184,318" stroke="#F5D078" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+      <!-- Diamond vertex -->
+      <rect class="v-diamond" x="140" y="260" width="16" height="16" fill="#C9A84C" transform="rotate(45 148 268)"/>
     </svg>
   </div>
-
   <div class="hero-text">
     <div class="hero-badge">Diseño Web · IA · Automatización</div>
     <h1 class="hero-name">VICTOR</h1>
@@ -546,20 +561,13 @@
       <strong>Transformo negocios locales</strong> en experiencias digitales que no se olvidan.
     </p>
     <div class="hero-ctas">
-      <a href="https://wa.me/34693848285" target="_blank" class="btn-gold">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/>
+      <a href="#contact" class="btn-gold">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
-        WhatsApp
+        Hablar con Victor
       </a>
-      <a href="mailto:portavidalvictor@gmail.com" class="btn-outline">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="2" y="4" width="20" height="16" rx="1.5"/>
-          <polyline points="2,4 12,13 22,4"/>
-        </svg>
-        Email
-      </a>
+      <a href="#portfolio" class="btn-outline">Ver proyectos</a>
     </div>
   </div>
 </section>
@@ -603,7 +611,7 @@
         <circle cx="32" cy="32" r="1.5" fill="currentColor" stroke="none"/>
       </svg>
       <h3 class="svc-name">Chatbots con IA</h3>
-      <p class="svc-desc">Agentes inteligentes que atienden a tus clientes 24/7, gestionan reservas y responden preguntas. Tu negocio nunca duerme.</p>
+      <p class="svc-desc">Agentes inteligentes que atienden a tus clientes 24/7, gestionan reservas y responden preguntas. <strong style="color:var(--text);font-weight:400">Experto en automatizaciones para empresas.</strong> Tu negocio nunca duerme.</p>
     </div>
 
     <div class="svc-card reveal" style="transition-delay:0.24s">
@@ -617,7 +625,161 @@
         <line x1="8" y1="16" x2="8" y2="10" stroke-dasharray="2 2"/>
       </svg>
       <h3 class="svc-name">Automatización</h3>
-      <p class="svc-desc">Elimina tareas repetitivas. Conecta herramientas, automatiza seguimientos y deja que la tecnología trabaje mientras tú creces.</p>
+      <p class="svc-desc">Elimina tareas repetitivas. Conecta herramientas, automatiza seguimientos y deja que la tecnología trabaje mientras tú creces. Ahorra horas y costes reales cada mes.</p>
+    </div>
+  </div>
+
+  <!-- N8N EXAMPLE -->
+  <div class="n8n-block reveal" style="transition-delay:0.3s">
+    <p class="n8n-title">Ejemplo real — Automatización con n8n</p>
+    <p class="n8n-sub">Así funciona un agente de WhatsApp inteligente para una barbería</p>
+    <div class="n8n-flow">
+      <div class="n8n-node">
+        <div class="n8n-box trigger">
+          <div class="n8n-box-icon">💬</div>
+          <div class="n8n-box-name">WhatsApp</div>
+          <div class="n8n-box-type">Trigger</div>
+        </div>
+      </div>
+      <div class="n8n-arrow">
+        <svg width="36" height="16" viewBox="0 0 36 16" fill="none">
+          <line x1="0" y1="8" x2="28" y2="8" stroke="currentColor" stroke-width="1"/>
+          <polyline points="24,4 32,8 24,12" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="n8n-node">
+        <div class="n8n-box">
+          <div class="n8n-box-icon">⚙️</div>
+          <div class="n8n-box-name">n8n</div>
+          <div class="n8n-box-type">Procesador</div>
+        </div>
+      </div>
+      <div class="n8n-arrow">
+        <svg width="36" height="16" viewBox="0 0 36 16" fill="none">
+          <line x1="0" y1="8" x2="28" y2="8" stroke="currentColor" stroke-width="1"/>
+          <polyline points="24,4 32,8 24,12" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="n8n-node">
+        <div class="n8n-box ai-node">
+          <div class="n8n-box-icon">🧠</div>
+          <div class="n8n-box-name">IA Claude</div>
+          <div class="n8n-box-type">Agente IA</div>
+        </div>
+      </div>
+      <div class="n8n-arrow">
+        <svg width="36" height="16" viewBox="0 0 36 16" fill="none">
+          <line x1="0" y1="8" x2="28" y2="8" stroke="currentColor" stroke-width="1"/>
+          <polyline points="24,4 32,8 24,12" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="n8n-node">
+        <div class="n8n-box">
+          <div class="n8n-box-icon">📅</div>
+          <div class="n8n-box-name">Reservas</div>
+          <div class="n8n-box-type">Google Cal.</div>
+        </div>
+      </div>
+      <div class="n8n-arrow">
+        <svg width="36" height="16" viewBox="0 0 36 16" fill="none">
+          <line x1="0" y1="8" x2="28" y2="8" stroke="currentColor" stroke-width="1"/>
+          <polyline points="24,4 32,8 24,12" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="n8n-node">
+        <div class="n8n-box trigger">
+          <div class="n8n-box-icon">✅</div>
+          <div class="n8n-box-name">Respuesta</div>
+          <div class="n8n-box-type">Auto 24/7</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="port-header reveal">
+    <div>
+      <p class="s-label">Proyectos</p>
+      <h2 class="s-title">Trabajo real.<br/>Resultados visibles.</h2>
+    </div>
+    <p class="s-sub">
+      Cada web está diseñada desde cero para el negocio concreto. Sin plantillas. Sin atajos.
+    </p>
+  </div>
+
+  <div class="port-grid">
+    <div class="port-card reveal">
+      <div class="port-preview">
+        <div class="port-preview-inner">
+          <div class="port-browser-bar">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="port-preview-content">
+            <div class="port-preview-bar gold"></div>
+            <div class="port-preview-bar short"></div>
+            <div class="port-preview-grid">
+              <div class="port-preview-block"></div>
+              <div class="port-preview-block"></div>
+            </div>
+            <div class="port-preview-bar med"></div>
+            <div class="port-preview-bar short"></div>
+          </div>
+        </div>
+        <div class="port-tag-overlay">Proyecto 1</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-chip">Diseño Web</span>
+          <span class="port-chip">SEO</span>
+        </div>
+        <h3 class="port-name">Añade tu proyecto aquí</h3>
+        <p class="port-desc">Descripción del proyecto. Qué problema tenía el negocio, cómo lo resolviste y qué resultados obtuvo. Sé específico con los números.</p>
+        <a href="#" class="port-link" target="_blank">
+          Ver proyecto
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="port-card reveal" style="transition-delay:0.15s">
+      <div class="port-preview">
+        <div class="port-preview-inner">
+          <div class="port-browser-bar">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="port-preview-content">
+            <div class="port-preview-bar med"></div>
+            <div class="port-preview-bar short"></div>
+            <div class="port-preview-grid">
+              <div class="port-preview-block"></div>
+              <div class="port-preview-block"></div>
+            </div>
+            <div class="port-preview-bar gold" style="width:50%"></div>
+            <div class="port-preview-bar short"></div>
+          </div>
+        </div>
+        <div class="port-tag-overlay">Proyecto 2</div>
+      </div>
+      <div class="port-info">
+        <div class="port-tags">
+          <span class="port-chip">Chatbot IA</span>
+          <span class="port-chip">Automatización</span>
+        </div>
+        <h3 class="port-name">Añade tu proyecto aquí</h3>
+        <p class="port-desc">Descripción del proyecto. Qué problema tenía el negocio, cómo lo resolviste y qué resultados obtuvo. Sé específico con los números.</p>
+        <a href="#" class="port-link" target="_blank">
+          Ver proyecto
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -647,6 +809,36 @@
   </div>
 </section>
 
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="rev-header reveal">
+    <div>
+      <p class="s-label">Valoraciones</p>
+      <h2 class="s-title">Lo que dicen<br/>los clientes.</h2>
+      <div class="stars-display">
+        <span class="star-icon">★</span><span class="star-icon">★</span>
+        <span class="star-icon">★</span><span class="star-icon">★</span>
+        <span class="star-icon">★</span>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;color:#555;margin-bottom:16px;max-width:300px;">¿Ya trabajaste conmigo? Cuenta tu experiencia y ayuda a otros negocios a decidir.</p>
+      <button class="btn-gold" onclick="openReviewModal()" style="font-size:12px;padding:13px 24px;">
+        Dejar valoración
+      </button>
+    </div>
+  </div>
+
+  <div class="rev-grid" id="reviews-grid">
+    <!-- Reviews rendered by JS -->
+  </div>
+
+  <div id="reviews-empty" style="display:none;" class="admin-empty">
+    <span>⭐</span>
+    Sé el primero en dejar una valoración.
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="ab-inner">
@@ -673,7 +865,6 @@
         </div>
       </div>
     </div>
-
     <div class="ab-visual reveal" style="transition-delay:0.2s">
       <div class="v-circle">
         <div class="vc-glow"></div>
@@ -685,7 +876,6 @@
           <line x1="8" y1="8" x2="60" y2="112" stroke="#C9A84C" stroke-width="2" stroke-linecap="square"/>
           <polyline points="112,8 60,112 74,134" stroke="#F5D078" stroke-width="3.2" stroke-linecap="square" fill="none"/>
           <rect x="54" y="106" width="12" height="12" fill="#C9A84C" transform="rotate(45 60 112)"/>
-          <!-- glow -->
           <line x1="8" y1="8" x2="60" y2="112" stroke="#C9A84C" stroke-width="8" opacity="0.08" stroke-linecap="square"/>
           <polyline points="112,8 60,112 74,134" stroke="#F5D078" stroke-width="10" opacity="0.08" fill="none"/>
         </svg>
@@ -697,28 +887,87 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-glow"></div>
-  <p class="s-label reveal" style="justify-content:center; margin-bottom:20px;">Hablemos</p>
-  <h2 class="ct-title reveal">
-    ¿Tu negocio listo<br/>para <em>dominar</em>?
-  </h2>
-  <p class="ct-sub reveal">
-    Una conversación puede cambiar la presencia digital de tu negocio para siempre.
-  </p>
-  <div class="ct-ctas reveal">
-    <a href="https://wa.me/34693848285" target="_blank" class="btn-gold">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-        <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/>
-      </svg>
-      Escribir por WhatsApp
-    </a>
-    <a href="mailto:portavidalvictor@gmail.com" class="btn-outline">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="4" width="20" height="16" rx="1.5"/>
-        <polyline points="2,4 12,13 22,4"/>
-      </svg>
-      Enviar email
-    </a>
+  <div class="contact-inner">
+    <div class="ct-left reveal">
+      <p class="s-label" style="margin-bottom:20px;">Hablemos</p>
+      <h2 class="ct-title">¿Tu negocio listo<br/>para <em>dominar</em>?</h2>
+      <p class="ct-sub">Una conversación puede cambiar la presencia digital de tu negocio para siempre.</p>
+      <div class="ct-direct">
+        <a href="https://wa.me/34693848285" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/>
+          </svg>
+          WhatsApp directo
+          <span>+34 693 848 285</span>
+        </a>
+        <a href="mailto:portavidalvictor@gmail.com">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="4" width="20" height="16" rx="1.5"/>
+            <polyline points="2,4 12,13 22,4"/>
+          </svg>
+          Email
+          <span>portavidalvictor@gmail.com</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="ct-form reveal" style="transition-delay:0.15s">
+      <p class="form-title">Cuéntame tu caso</p>
+      <p class="form-sub">Te respondo en menos de 24h con un análisis personalizado.</p>
+      <form id="contact-form" onsubmit="submitContact(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tu nombre</label>
+            <input type="text" id="cf-nombre" placeholder="Victor García" required />
+          </div>
+          <div class="form-group">
+            <label>Empresa / negocio</label>
+            <input type="text" id="cf-empresa" placeholder="Barbería Los Reyes" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo de negocio</label>
+            <select id="cf-tipo">
+              <option value="">Selecciona...</option>
+              <option>Barbería / Peluquería</option>
+              <option>Clínica / Dentista</option>
+              <option>Gimnasio / Fitness</option>
+              <option>Restaurante / Bar</option>
+              <option>Tienda local</option>
+              <option>Academia / Formación</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Servicio que te interesa</label>
+            <select id="cf-servicio">
+              <option value="">Selecciona...</option>
+              <option>Diseño Web</option>
+              <option>Chatbot con IA</option>
+              <option>Automatización</option>
+              <option>Todo incluido</option>
+              <option>No lo sé aún</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>¿Cuál es tu situación / problema?</label>
+          <textarea id="cf-mensaje" rows="4" placeholder="Cuéntame qué necesitas mejorar en tu negocio, qué tareas os quitan tiempo, qué resultados buscáis..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Teléfono (opcional)</label>
+          <input type="tel" id="cf-telefono" placeholder="+34 600 000 000" />
+        </div>
+        <button type="submit" class="form-btn">Enviar y hablar por WhatsApp →</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">✅</div>
+        <h3>¡Mensaje recibido!</h3>
+        <p>Te abriré WhatsApp con tu información. Respondo en menos de 24h.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -735,108 +984,561 @@
   <span class="ft-gold">© 2025</span>
 </footer>
 
+<!-- ==================== ADMIN PANEL ==================== -->
+<div id="admin-panel">
+  <div class="admin-nav">
+    <div class="admin-logo">VICTOR <span>Panel de administración</span></div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="adminTab('contacts')">Contactos</button>
+      <button class="admin-tab" onclick="adminTab('reviews-admin')">Valoraciones</button>
+      <button class="admin-tab" onclick="adminTab('roi')">Calculadora ROI</button>
+    </div>
+    <button class="admin-close" onclick="closeAdmin()">✕ Cerrar</button>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- CONTACTS TAB -->
+    <div class="admin-section active" id="tab-contacts">
+      <div class="admin-kpis" id="admin-kpis">
+        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-total">0</div><div class="admin-kpi-l">Contactos totales</div></div>
+        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-web">0</div><div class="admin-kpi-l">Diseño Web</div></div>
+        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-chatbot">0</div><div class="admin-kpi-l">Chatbots / IA</div></div>
+        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-auto">0</div><div class="admin-kpi-l">Automatización</div></div>
+      </div>
+      <div id="contacts-list"></div>
+    </div>
+
+    <!-- REVIEWS ADMIN TAB -->
+    <div class="admin-section" id="tab-reviews-admin">
+      <div id="reviews-admin-list"></div>
+    </div>
+
+    <!-- ROI CALCULATOR TAB -->
+    <div class="admin-section" id="tab-roi">
+      <div class="roi-layout">
+        <div class="roi-form-panel">
+          <div class="roi-section-title">Datos del cliente</div>
+
+          <div class="roi-group">
+            <label>Descripción del problema</label>
+            <textarea id="roi-problema" rows="4" placeholder="Ej: tardan 3 horas al día en gestionar reservas manualmente, 2 empleados implicados..."></textarea>
+          </div>
+
+          <div class="roi-row">
+            <div class="roi-group">
+              <label>Tipo de negocio</label>
+              <select id="roi-tipo">
+                <option>Barbería / Peluquería</option>
+                <option>Clínica / Dentista</option>
+                <option>Gimnasio</option>
+                <option>Restaurante</option>
+                <option>Tienda local</option>
+                <option>Empresa / Pyme</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="roi-group">
+              <label>Servicio a ofrecer</label>
+              <select id="roi-servicio">
+                <option value="web">Diseño Web</option>
+                <option value="chatbot">Chatbot IA</option>
+                <option value="auto">Automatización</option>
+                <option value="combo">Todo incluido</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="roi-section-title" style="margin-top:24px;">Tareas que se automatizan</div>
+
+          <div class="roi-row">
+            <div class="roi-group">
+              <label>Empleados en esa tarea</label>
+              <input type="number" id="roi-empleados" value="2" min="1" />
+            </div>
+            <div class="roi-group">
+              <label>Horas/semana por empleado</label>
+              <input type="number" id="roi-horas" value="8" min="1" />
+            </div>
+          </div>
+          <div class="roi-row">
+            <div class="roi-group">
+              <label>Salario €/hora empleado</label>
+              <input type="number" id="roi-salario" value="15" min="5" />
+            </div>
+            <div class="roi-group">
+              <label>% tarea automatizable</label>
+              <input type="number" id="roi-pct" value="80" min="10" max="100" />
+            </div>
+          </div>
+
+          <div class="roi-section-title" style="margin-top:24px;">Mi trabajo (Victor)</div>
+
+          <div class="roi-row">
+            <div class="roi-group">
+              <label>Horas de desarrollo</label>
+              <input type="number" id="roi-dev-horas" value="20" min="1" />
+            </div>
+            <div class="roi-group">
+              <label>Clientes nuevos/mes (web)</label>
+              <input type="number" id="roi-clientes" value="0" min="0" />
+            </div>
+          </div>
+          <div class="roi-group">
+            <label>Ticket medio cliente (€)</label>
+            <input type="number" id="roi-ticket" value="0" min="0" />
+          </div>
+
+          <button class="roi-calc-btn" onclick="calcROI()">Calcular ROI →</button>
+        </div>
+
+        <div class="roi-result-panel">
+          <div class="roi-section-title">Resultados del análisis</div>
+          <div class="roi-empty" id="roi-empty">
+            <span>📊</span>
+            Rellena los datos y pulsa calcular para ver el análisis completo.
+          </div>
+          <div class="roi-result-content" id="roi-result">
+            <div class="roi-headline">Ahorro anual estimado</div>
+            <div class="roi-big-number" id="res-anual">—</div>
+            <div class="roi-big-sub" id="res-anual-sub">vs. inversión única en automatización</div>
+
+            <div class="roi-metrics" id="roi-metrics"></div>
+
+            <div class="roi-pitch" id="roi-pitch">
+              <div class="roi-pitch-title">Argumento de venta</div>
+              <div class="roi-pitch-text" id="roi-pitch-text"></div>
+            </div>
+
+            <button class="roi-copy-btn" onclick="copyROI()">📋 Copiar argumento de venta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="modal-review">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeReviewModal()">✕</button>
+    <h2 class="modal-title">Tu valoración</h2>
+    <p class="modal-sub">Cuéntanos cómo ha mejorado tu negocio desde que trabajamos juntos.</p>
+
+    <div class="form-group">
+      <label>Puntuación</label>
+      <div class="star-picker" id="star-picker">
+        <span class="star-pick" data-v="1">★</span>
+        <span class="star-pick" data-v="2">★</span>
+        <span class="star-pick" data-v="3">★</span>
+        <span class="star-pick" data-v="4">★</span>
+        <span class="star-pick" data-v="5">★</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tu nombre</label>
+        <input type="text" id="rev-nombre" placeholder="Nombre" />
+      </div>
+      <div class="form-group">
+        <label>Negocio</label>
+        <input type="text" id="rev-empresa" placeholder="Mi Barbería" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Servicio contratado</label>
+      <select id="rev-servicio">
+        <option>Diseño Web</option>
+        <option>Chatbot con IA</option>
+        <option>Automatización</option>
+        <option>Todo incluido</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tu experiencia</label>
+      <textarea id="rev-texto" rows="3" placeholder="Cuéntanos qué cambió desde que trabajamos juntos..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Mejora concreta en tu negocio (opcional)</label>
+      <input type="text" id="rev-mejora" placeholder="Ej: +30% de reservas online, ahorramos 10h/semana..." />
+    </div>
+    <button class="form-btn" onclick="submitReview()">Enviar valoración</button>
+  </div>
+</div>
+
 <script>
-  // CURSOR
-  const cur = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  function animCursor() {
-    cur.style.left = mx + 'px'; cur.style.top = my + 'px';
-    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animCursor);
-  }
-  animCursor();
+// ─── CURSOR ───────────────────────────────────────────────────────────────────
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
 
-  // NAV
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
+// ─── NAV ──────────────────────────────────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── NEURAL NETWORK ───────────────────────────────────────────────────────────
+const canvas = document.getElementById('neural');
+const ctx = canvas.getContext('2d');
+let W, H, dots = [];
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+for (let i = 0; i < 55; i++) {
+  dots.push({ x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, vx: (Math.random()-0.5)*0.25, vy: (Math.random()-0.5)*0.25, r: Math.random()*1.5+0.5 });
+}
+function drawNeural() {
+  ctx.clearRect(0, 0, W, H);
+  dots.forEach(d => {
+    d.x += d.vx; d.y += d.vy;
+    if (d.x < 0 || d.x > W) d.vx *= -1;
+    if (d.y < 0 || d.y > H) d.vy *= -1;
   });
-
-  // NEURAL NETWORK
-  const canvas = document.getElementById('neural');
-  const ctx = canvas.getContext('2d');
-  let W, H, dots = [];
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const N = 55;
-  for (let i = 0; i < N; i++) {
-    dots.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.5 + 0.5
-    });
-  }
-
-  function drawNeural() {
-    ctx.clearRect(0, 0, W, H);
-    // Move
-    dots.forEach(d => {
-      d.x += d.vx; d.y += d.vy;
-      if (d.x < 0 || d.x > W) d.vx *= -1;
-      if (d.y < 0 || d.y > H) d.vy *= -1;
-    });
-    // Lines
-    for (let i = 0; i < N; i++) {
-      for (let j = i + 1; j < N; j++) {
-        const dx = dots[i].x - dots[j].x;
-        const dy = dots[i].y - dots[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 160) {
-          const alpha = (1 - dist/160) * 0.18;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(139,105,20,${alpha})`;
-          ctx.lineWidth = 0.5;
-          ctx.moveTo(dots[i].x, dots[i].y);
-          ctx.lineTo(dots[j].x, dots[j].y);
-          ctx.stroke();
-        }
+  for (let i = 0; i < dots.length; i++) {
+    for (let j = i+1; j < dots.length; j++) {
+      const dx = dots[i].x-dots[j].x, dy = dots[i].y-dots[j].y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if (dist < 160) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(139,105,20,${(1-dist/160)*0.18})`;
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(dots[i].x, dots[i].y);
+        ctx.lineTo(dots[j].x, dots[j].y);
+        ctx.stroke();
       }
     }
-    // Dots
-    dots.forEach(d => {
-      ctx.beginPath();
-      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(201,168,76,0.35)';
-      ctx.fill();
-    });
-    requestAnimationFrame(drawNeural);
   }
-  drawNeural();
+  dots.forEach(d => {
+    ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(201,168,76,0.35)'; ctx.fill();
+  });
+  requestAnimationFrame(drawNeural);
+}
+drawNeural();
 
-  // SCROLL REVEAL
-  const reveals = document.querySelectorAll('.reveal');
-  const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => ro.observe(el));
+// ─── SCROLL REVEAL ────────────────────────────────────────────────────────────
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-  // TAGS STAGGER
-  const tags = document.querySelectorAll('.c-tag');
-  const tagsWrap = document.getElementById('tags');
-  const to = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        tags.forEach((t, i) => {
-          setTimeout(() => t.classList.add('visible'), i * 80);
-        });
-        to.unobserve(e.target);
-      }
+const tags = document.querySelectorAll('.c-tag');
+const to = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      tags.forEach((t, i) => setTimeout(() => t.classList.add('visible'), i * 80));
+      to.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+to.observe(document.getElementById('tags'));
+
+// ─── STORAGE HELPERS ──────────────────────────────────────────────────────────
+function getContacts() { return JSON.parse(localStorage.getItem('vic_contacts') || '[]'); }
+function saveContacts(c) { localStorage.setItem('vic_contacts', JSON.stringify(c)); }
+function getReviews() { return JSON.parse(localStorage.getItem('vic_reviews') || '[]'); }
+function saveReviews(r) { localStorage.setItem('vic_reviews', JSON.stringify(r)); }
+
+// ─── CONTACT FORM ─────────────────────────────────────────────────────────────
+function submitContact(e) {
+  e.preventDefault();
+  const data = {
+    id: Date.now(),
+    nombre: document.getElementById('cf-nombre').value,
+    empresa: document.getElementById('cf-empresa').value,
+    tipo: document.getElementById('cf-tipo').value,
+    servicio: document.getElementById('cf-servicio').value,
+    mensaje: document.getElementById('cf-mensaje').value,
+    telefono: document.getElementById('cf-telefono').value,
+    fecha: new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
+  };
+  const contacts = getContacts();
+  contacts.unshift(data);
+  saveContacts(contacts);
+
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+
+  const msg = encodeURIComponent(
+    `Hola Victor! Te escribo desde tu web.\n\n` +
+    `Nombre: ${data.nombre}\n` +
+    `Empresa: ${data.empresa || '—'}\n` +
+    `Tipo: ${data.tipo || '—'}\n` +
+    `Servicio: ${data.servicio || '—'}\n\n` +
+    `${data.mensaje || '—'}`
+  );
+  setTimeout(() => window.open(`https://wa.me/34693848285?text=${msg}`, '_blank'), 800);
+}
+
+// ─── REVIEWS (PUBLIC) ─────────────────────────────────────────────────────────
+let selectedStars = 5;
+
+document.getElementById('star-picker').addEventListener('click', e => {
+  if (e.target.classList.contains('star-pick')) {
+    selectedStars = parseInt(e.target.dataset.v);
+    document.querySelectorAll('.star-pick').forEach((s, i) => {
+      s.classList.toggle('active', i < selectedStars);
     });
-  }, { threshold: 0.2 });
-  to.observe(tagsWrap);
+  }
+});
+document.querySelectorAll('.star-pick').forEach((s, i) => {
+  if (i < 5) s.classList.add('active');
+});
+
+function openReviewModal() { document.getElementById('modal-review').classList.add('open'); }
+function closeReviewModal() { document.getElementById('modal-review').classList.remove('open'); }
+
+function submitReview() {
+  const nombre = document.getElementById('rev-nombre').value.trim();
+  const texto = document.getElementById('rev-texto').value.trim();
+  if (!nombre || !texto) { alert('Por favor rellena al menos tu nombre y la experiencia.'); return; }
+  const rev = {
+    id: Date.now(),
+    nombre,
+    empresa: document.getElementById('rev-empresa').value,
+    servicio: document.getElementById('rev-servicio').value,
+    rating: selectedStars,
+    texto,
+    mejora: document.getElementById('rev-mejora').value,
+    approved: false,
+    fecha: new Date().toLocaleDateString('es-ES')
+  };
+  const reviews = getReviews();
+  reviews.unshift(rev);
+  saveReviews(reviews);
+  closeReviewModal();
+  renderPublicReviews();
+  alert('¡Gracias por tu valoración! Aparecerá pronto.');
+}
+
+function renderPublicReviews() {
+  const reviews = getReviews().filter(r => r.approved);
+  const grid = document.getElementById('reviews-grid');
+  const empty = document.getElementById('reviews-empty');
+  if (reviews.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  grid.style.display = 'grid';
+  empty.style.display = 'none';
+  grid.innerHTML = reviews.map(r => `
+    <div class="rev-card">
+      <div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      <p class="rev-text">${r.texto}</p>
+      <div class="rev-author">
+        <div class="rev-avatar">${r.nombre[0].toUpperCase()}</div>
+        <div>
+          <div class="rev-name">${r.nombre}</div>
+          <div class="rev-biz">${r.empresa || r.servicio}</div>
+        </div>
+      </div>
+      ${r.mejora ? `<div class="rev-improvement"><strong>Mejora:</strong> ${r.mejora}</div>` : ''}
+    </div>
+  `).join('');
+}
+renderPublicReviews();
+
+// ─── ADMIN PANEL ─────────────────────────────────────────────────────────────
+const ADMIN_PWD = 'Victor2025!';
+
+function checkAdmin() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('admin') === 'v') {
+    const pwd = prompt('Contraseña de administrador:');
+    if (pwd === ADMIN_PWD) openAdmin();
+    else if (pwd !== null) alert('Contraseña incorrecta.');
+  }
+}
+checkAdmin();
+
+function openAdmin() {
+  document.getElementById('admin-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderAdminContacts();
+  renderAdminReviews();
+}
+function closeAdmin() {
+  document.getElementById('admin-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function adminTab(tab) {
+  document.querySelectorAll('.admin-tab').forEach((t,i) => t.classList.toggle('active', ['contacts','reviews-admin','roi'][i] === tab));
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function renderAdminContacts() {
+  const contacts = getContacts();
+  const web = contacts.filter(c => c.servicio && c.servicio.toLowerCase().includes('web')).length;
+  const chatbot = contacts.filter(c => c.servicio && (c.servicio.toLowerCase().includes('chat') || c.servicio.toLowerCase().includes('ia'))).length;
+  const auto = contacts.filter(c => c.servicio && c.servicio.toLowerCase().includes('auto')).length;
+  document.getElementById('kpi-total').textContent = contacts.length;
+  document.getElementById('kpi-web').textContent = web;
+  document.getElementById('kpi-chatbot').textContent = chatbot;
+  document.getElementById('kpi-auto').textContent = auto;
+
+  const list = document.getElementById('contacts-list');
+  if (contacts.length === 0) {
+    list.innerHTML = '<div class="admin-empty"><span>📭</span>Aún no hay contactos. Cuando alguien rellene el formulario, aparecerá aquí.</div>';
+    return;
+  }
+  list.innerHTML = '<div class="admin-contacts-list">' + contacts.map(c => `
+    <div class="admin-contact-card">
+      <div>
+        <div class="acc-name">${c.nombre}</div>
+        <div class="acc-meta">
+          <span>🏢 ${c.empresa || '—'}</span>
+          <span>📂 ${c.tipo || '—'}</span>
+          ${c.telefono ? `<span>📱 ${c.telefono}</span>` : ''}
+          <span class="acc-date">🗓 ${c.fecha}</span>
+        </div>
+        ${c.servicio ? `<span class="acc-service-tag">${c.servicio}</span>` : ''}
+        ${c.mensaje ? `<div class="acc-msg">${c.mensaje}</div>` : ''}
+      </div>
+      <div class="acc-actions">
+        <button class="acc-btn wa" onclick="waContact('${encodeURIComponent(c.nombre)}','${encodeURIComponent(c.empresa||'')}','${encodeURIComponent(c.servicio||'')}')">WhatsApp</button>
+        <button class="acc-btn del" onclick="deleteContact(${c.id})">Eliminar</button>
+      </div>
+    </div>
+  `).join('') + '</div>';
+}
+
+function waContact(nombre, empresa, servicio) {
+  const msg = encodeURIComponent(`Hola ${decodeURIComponent(nombre)}, soy Victor. Vi que te interesa ${decodeURIComponent(servicio) || 'mis servicios'}${decodeURIComponent(empresa) ? ` para ${decodeURIComponent(empresa)}` : ''}. ¿Cuándo podemos hablar?`);
+  window.open(`https://wa.me/34693848285?text=${msg}`, '_blank');
+}
+
+function deleteContact(id) {
+  if (!confirm('¿Eliminar este contacto?')) return;
+  saveContacts(getContacts().filter(c => c.id !== id));
+  renderAdminContacts();
+}
+
+function renderAdminReviews() {
+  const reviews = getReviews();
+  const list = document.getElementById('reviews-admin-list');
+  if (reviews.length === 0) {
+    list.innerHTML = '<div class="admin-empty"><span>⭐</span>Aún no hay valoraciones.</div>';
+    return;
+  }
+  list.innerHTML = '<div class="admin-reviews-list">' + reviews.map(r => `
+    <div class="admin-rev-card">
+      <div>
+        <div class="arev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+        <div class="arev-text">"${r.texto}"</div>
+        <div class="arev-meta">${r.nombre}${r.empresa ? ' · '+r.empresa : ''} · ${r.servicio} · ${r.fecha}</div>
+        ${r.mejora ? `<div class="arev-meta" style="color:#555;margin-top:4px">Mejora: ${r.mejora}</div>` : ''}
+        <div class="arev-actions">
+          <button class="arev-btn approve" onclick="approveReview(${r.id})">${r.approved ? '✓ Publicada' : 'Aprobar'}</button>
+          <button class="arev-btn reject" onclick="deleteReview(${r.id})">Eliminar</button>
+        </div>
+      </div>
+      <span class="arev-status ${r.approved ? 'approved' : 'pending'}">${r.approved ? 'Publicada' : 'Pendiente'}</span>
+    </div>
+  `).join('') + '</div>';
+}
+
+function approveReview(id) {
+  const reviews = getReviews().map(r => r.id === id ? {...r, approved: !r.approved} : r);
+  saveReviews(reviews);
+  renderAdminReviews();
+  renderPublicReviews();
+}
+function deleteReview(id) {
+  if (!confirm('¿Eliminar esta valoración?')) return;
+  saveReviews(getReviews().filter(r => r.id !== id));
+  renderAdminReviews();
+  renderPublicReviews();
+}
+
+// ─── ROI CALCULATOR ───────────────────────────────────────────────────────────
+function calcROI() {
+  const empleados   = parseFloat(document.getElementById('roi-empleados').value) || 0;
+  const horasSemana = parseFloat(document.getElementById('roi-horas').value) || 0;
+  const salario     = parseFloat(document.getElementById('roi-salario').value) || 15;
+  const pct         = parseFloat(document.getElementById('roi-pct').value) / 100 || 0.8;
+  const devHoras    = parseFloat(document.getElementById('roi-dev-horas').value) || 0;
+  const clientes    = parseFloat(document.getElementById('roi-clientes').value) || 0;
+  const ticket      = parseFloat(document.getElementById('roi-ticket').value) || 0;
+  const servicio    = document.getElementById('roi-servicio').value;
+  const tipo        = document.getElementById('roi-tipo').value;
+  const problema    = document.getElementById('roi-problema').value;
+
+  const horasMes       = empleados * horasSemana * 4.33;
+  const horasAhorradas = horasMes * pct;
+  const ahorroMensual  = horasAhorradas * salario;
+  const ahorroAnual    = ahorroMensual * 12;
+  const ingresoExtra   = clientes * ticket * 12;
+  const inversionVictor = devHoras * 25;
+  const totalBeneficio = ahorroAnual + ingresoExtra;
+  const roi = inversionVictor > 0 ? ((totalBeneficio - inversionVictor) / inversionVictor * 100).toFixed(0) : 999;
+  const breakeven = inversionVictor > 0 && ahorroMensual > 0 ? (inversionVictor / (ahorroMensual + clientes*ticket)).toFixed(1) : 0;
+
+  const fmt = n => n.toLocaleString('es-ES', { style:'currency', currency:'EUR', maximumFractionDigits:0 });
+
+  document.getElementById('roi-empty').style.display = 'none';
+  const res = document.getElementById('roi-result');
+  res.classList.add('show');
+
+  document.getElementById('res-anual').textContent = fmt(totalBeneficio);
+  document.getElementById('res-anual-sub').textContent = `vs. inversión de ${fmt(inversionVictor)} con Victor`;
+
+  document.getElementById('roi-metrics').innerHTML = `
+    <div class="roi-metric"><span class="roi-metric-label">Horas actuales perdidas/mes</span><span class="roi-metric-value red">${horasMes.toFixed(0)}h</span></div>
+    <div class="roi-metric"><span class="roi-metric-label">Horas ahorradas/mes</span><span class="roi-metric-value green">${horasAhorradas.toFixed(0)}h</span></div>
+    <div class="roi-metric"><span class="roi-metric-label">Coste actual tarea/mes</span><span class="roi-metric-value red">${fmt(horasMes*salario)}</span></div>
+    <div class="roi-metric"><span class="roi-metric-label">Ahorro operativo/mes</span><span class="roi-metric-value green">${fmt(ahorroMensual)}</span></div>
+    ${ingresoExtra > 0 ? `<div class="roi-metric"><span class="roi-metric-label">Ingresos extra/año (web)</span><span class="roi-metric-value green">${fmt(ingresoExtra)}</span></div>` : ''}
+    <div class="roi-metric"><span class="roi-metric-label">Inversión única en Victor</span><span class="roi-metric-value gold">${fmt(inversionVictor)}</span></div>
+    <div class="roi-metric"><span class="roi-metric-label">ROI total</span><span class="roi-metric-value green">${roi}%</span></div>
+    <div class="roi-metric"><span class="roi-metric-label">Break-even</span><span class="roi-metric-value gold">${breakeven} meses</span></div>
+  `;
+
+  const pitchText = buildPitch(tipo, servicio, horasMes, horasAhorradas, ahorroMensual, ahorroAnual, inversionVictor, breakeven, ingresoExtra, clientes, problema);
+  document.getElementById('roi-pitch-text').textContent = pitchText;
+  window._lastROIPitch = pitchText;
+}
+
+function buildPitch(tipo, servicio, horasMes, horasAh, ahorroM, ahorroA, inv, be, ingExtra, clients, problema) {
+  const fmt = n => n.toLocaleString('es-ES', { style:'currency', currency:'EUR', maximumFractionDigits:0 });
+  let pitch = '';
+  if (servicio === 'auto' || servicio === 'chatbot' || servicio === 'combo') {
+    pitch += `Actualmente en ${tipo} estáis dedicando ${horasMes.toFixed(0)} horas al mes a tareas que se pueden automatizar. `;
+    pitch += `Con la automatización que te propongo, elimino el ${document.getElementById('roi-pct').value}% de ese trabajo manual, lo que se traduce en ${horasAh.toFixed(0)} horas liberadas cada mes y un ahorro directo de ${fmt(ahorroM)}/mes. `;
+    pitch += `En 12 meses eso son ${fmt(ahorroA)} que hoy estás tirando a la basura. `;
+  }
+  if (servicio === 'web' || servicio === 'combo') {
+    if (clients > 0) {
+      pitch += `Además, con una web profesional captarías unos ${clients} clientes nuevos al mes, generando ${fmt(ingExtra)} extra al año. `;
+    } else {
+      pitch += `Con una web profesional empezarías a captar clientes nuevos de forma constante — clientes que hoy van a la competencia porque no te encuentran. `;
+    }
+  }
+  pitch += `Mi inversión única es de ${fmt(inv)} y recuperas todo en solo ${be} meses. A partir de ahí, beneficio puro. `;
+  pitch += `¿Tiene sentido seguir pagando ${fmt(parseFloat(document.getElementById('roi-salario').value)*parseFloat(document.getElementById('roi-horas').value)*parseFloat(document.getElementById('roi-empleados').value)*4.33)} al mes por algo que podemos automatizar?`;
+  return pitch;
+}
+
+function copyROI() {
+  if (window._lastROIPitch) {
+    navigator.clipboard.writeText(window._lastROIPitch).then(() => {
+      const btn = document.querySelector('.roi-copy-btn');
+      btn.textContent = '✓ Copiado!';
+      setTimeout(() => btn.textContent = '📋 Copiar argumento de venta', 2000);
+    });
+  }
+}
 </script>
 </body>
 </html>
