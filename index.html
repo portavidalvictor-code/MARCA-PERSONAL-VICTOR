@@ -245,11 +245,11 @@
     .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
     .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
     .port-scroll-wrap { overflow: hidden; flex: 1; width: 100%; }
-    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 10s ease-in-out infinite; will-change: transform; }
+    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 28s cubic-bezier(0.45,0,0.55,1) infinite; will-change: transform; }
     @keyframes scrollPort {
-      0%, 8%  { transform: translateY(0); }
-      80%, 92% { transform: translateY(-62%); }
-      100%    { transform: translateY(0); }
+      0%, 5%   { transform: translateY(0); }
+      85%, 95% { transform: translateY(-68%); }
+      100%     { transform: translateY(0); }
     }
     .port-tag-overlay {
       position: absolute; top: 12px; right: 12px;
@@ -546,7 +546,7 @@
 <div id="cursor-ring"></div>
 
 <video id="video-bg" autoplay muted loop playsinline>
-  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260511_230229_7c9bc431-46cf-489a-948d-e8144d8eb5d4.mp4" type="video/mp4">
+  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260510_060007_60275ce7-030c-4668-a160-8f364ec537d3.mp4" type="video/mp4">
 </video>
 <div id="video-overlay"></div>
 
@@ -1005,6 +1005,22 @@
   <span class="ft-gold">© 2025</span>
 </footer>
 
+<!-- ADMIN LOGIN MODAL -->
+<div id="admin-login-modal" style="display:none;position:fixed;inset:0;z-index:20000;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;backdrop-filter:blur(8px);">
+  <div style="background:#0d0d0d;border:1px solid #2C1F06;padding:40px 48px;min-width:320px;text-align:center;">
+    <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.2em;color:#C9A84C;margin-bottom:24px;">ACCESO ADMIN</div>
+    <input id="admin-pwd-input" type="password" placeholder="Contraseña" style="width:100%;background:#080808;border:1px solid #2C1F06;color:#F0EDE4;padding:12px 16px;font-size:14px;font-family:inherit;box-sizing:border-box;outline:none;margin-bottom:8px;" />
+    <div id="admin-pwd-error" style="display:none;color:#c44;font-size:11px;margin-bottom:12px;">Contraseña incorrecta.</div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button onclick="hideAdminLogin()" style="flex:1;background:none;border:1px solid #2a2a2a;color:#555;padding:10px;font-size:12px;cursor:pointer;font-family:inherit;">Cancelar</button>
+      <button onclick="tryOpenAdmin()" style="flex:1;background:#C9A84C;border:none;color:#080808;padding:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:0.05em;">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN FLOATING BUTTON -->
+<button onclick="showAdminLogin()" title="Admin" style="position:fixed;bottom:24px;right:24px;z-index:9000;width:40px;height:40px;background:#0d0d0d;border:1px solid #2C1F06;color:#C9A84C;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.35;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.35'">⚙</button>
+
 <!-- ==================== ADMIN PANEL ==================== -->
 <div id="admin-panel">
   <div class="admin-nav">
@@ -1373,28 +1389,38 @@ renderPublicReviews();
 // ─── ADMIN PANEL ─────────────────────────────────────────────────────────────
 const ADMIN_PWD = 'Victor2025!';
 
-function checkAdmin() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('admin') === 'v') {
-    const pwd = prompt('Contraseña de administrador:');
-    if (pwd === ADMIN_PWD) openAdmin();
-    else if (pwd !== null) alert('Contraseña incorrecta.');
+function tryOpenAdmin() {
+  const pwd = document.getElementById('admin-pwd-input').value;
+  if (pwd === ADMIN_PWD) {
+    document.getElementById('admin-login-modal').style.display = 'none';
+    document.getElementById('admin-pwd-input').value = '';
+    openAdmin();
+  } else {
+    document.getElementById('admin-pwd-error').style.display = 'block';
   }
 }
-checkAdmin();
 
-// Atajo de teclado: Ctrl + Shift + A abre el admin
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-    if (document.getElementById('admin-panel').classList.contains('open')) {
-      closeAdmin();
-    } else {
-      const pwd = prompt('Contraseña de administrador:');
-      if (pwd === ADMIN_PWD) openAdmin();
-      else if (pwd !== null) alert('Contraseña incorrecta.');
-    }
-  }
+function showAdminLogin() {
+  document.getElementById('admin-login-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('admin-pwd-input').focus(), 50);
+}
+
+function hideAdminLogin() {
+  document.getElementById('admin-login-modal').style.display = 'none';
+  document.getElementById('admin-pwd-input').value = '';
+  document.getElementById('admin-pwd-error').style.display = 'none';
+}
+
+document.getElementById('admin-pwd-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') tryOpenAdmin();
+  if (e.key === 'Escape') hideAdminLogin();
 });
+
+// URL param (compatibilidad)
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('admin') === 'v') showAdminLogin();
+})();
 
 function openAdmin() {
   document.getElementById('admin-panel').classList.add('open');
