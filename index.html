@@ -245,10 +245,10 @@
     .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
     .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
     .port-scroll-wrap { overflow: hidden; flex: 1; width: 100%; }
-    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 28s cubic-bezier(0.45,0,0.55,1) infinite; will-change: transform; }
+    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 14s cubic-bezier(0.45,0,0.55,1) infinite; will-change: transform; }
     @keyframes scrollPort {
-      0%, 5%   { transform: translateY(0); }
-      85%, 95% { transform: translateY(-68%); }
+      0%, 3%   { transform: translateY(0); }
+      80%, 92% { transform: translateY(-68%); }
       100%     { transform: translateY(0); }
     }
     .port-tag-overlay {
@@ -384,41 +384,84 @@
     /* ===================== ADMIN PANEL ===================== */
     #admin-panel {
       display: none; position: fixed; inset: 0; z-index: 10000;
-      background: #050505; overflow-y: auto;
+      background: #050505; overflow: hidden;
       font-family: 'DM Sans', sans-serif;
+      flex-direction: row;
     }
-    #admin-panel.open { display: block; }
-    .admin-nav {
-      position: sticky; top: 0; z-index: 10;
-      background: rgba(5,5,5,0.96); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-g);
-      padding: 16px 40px; display: flex; align-items: center; gap: 24px;
+    #admin-panel.open { display: flex; }
+
+    /* Sidebar */
+    #admin-sidebar {
+      width: 240px; min-width: 240px;
+      background: #050505;
+      border-right: 1px solid rgba(201,168,76,0.1);
+      display: flex; flex-direction: column;
+      height: 100vh; position: sticky; top: 0;
     }
-    .admin-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.15em; color: var(--gold); flex: 1; }
-    .admin-logo span { color: #444; font-weight: 300; font-size: 11px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.2em; }
-    .admin-tabs { display: flex; gap: 4px; }
-    .admin-tab {
-      padding: 8px 20px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      border: 1px solid transparent; color: #555; cursor: none; background: none;
-      transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    .asb-logo {
+      padding: 22px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 10px;
     }
-    .admin-tab.active { border-color: var(--border-g); color: var(--gold); background: var(--gold-dim); }
-    .admin-tab:hover:not(.active) { color: var(--text); border-color: var(--border); }
-    .admin-close {
-      padding: 8px 16px; border: 1px solid var(--border); background: none;
-      color: #555; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      cursor: none; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    .asb-logo svg { width: 26px; height: 31px; flex-shrink: 0; }
+    .asb-logo-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.12em; color: var(--gold); }
+    .asb-logo-sub { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-top: 2px; font-family: monospace; }
+    .asb-user {
+      margin: 12px 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.06);
+      background: #0d0d0d; display: flex; align-items: center; gap: 10px;
     }
-    .admin-close:hover { color: var(--text); border-color: #444; }
-    .admin-body { padding: 40px; max-width: 1100px; margin: 0 auto; }
+    .asb-avatar {
+      width: 34px; height: 34px; background: var(--gold-dim); border: 1px solid var(--border-g);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800; color: var(--gold); flex-shrink: 0;
+    }
+    .asb-uname { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--text); text-transform: uppercase; }
+    .asb-ustatus { display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+    .asb-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; }
+    .asb-ustate { font-size: 9px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(255,255,255,0.3); }
+    .asb-nav { flex: 1; padding: 8px; overflow-y: auto; }
+    .asb-link {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 10px 12px; background: none; border: none;
+      border-left: 2px solid transparent;
+      color: rgba(240,237,228,0.35);
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      font-family: monospace; cursor: pointer; transition: all 0.2s; text-align: left;
+    }
+    .asb-link.active { border-left-color: var(--gold); color: var(--text); background: rgba(201,168,76,0.05); }
+    .asb-link:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.02); }
+    .asb-link-icon { font-size: 13px; width: 16px; text-align: center; }
+    .asb-close {
+      padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.05); border-left: none;
+      border-right: none; border-bottom: none;
+      background: none; color: rgba(240,237,228,0.25); font-size: 10px;
+      letter-spacing: 0.15em; text-transform: uppercase; font-family: monospace;
+      cursor: pointer; text-align: left; transition: color 0.2s; width: 100%;
+    }
+    .asb-close:hover { color: #dc2626; }
+
+    /* Main content */
+    #admin-main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-width: 0; }
+    .adm-topbar {
+      padding: 18px 32px; border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(5,5,5,0.97); position: sticky; top: 0; z-index: 5;
+    }
+    .adm-topbar-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.01em; color: var(--text); text-transform: uppercase; }
+    .adm-topbar-sub { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.12em; margin-top: 2px; font-family: monospace; text-transform: uppercase; }
+    .adm-content { padding: 28px 32px; flex: 1; }
     .admin-section { display: none; }
     .admin-section.active { display: block; }
 
-    /* Admin — Contacts */
-    .admin-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 40px; }
-    .admin-kpi { border: 1px solid var(--border); padding: 22px 24px; background: var(--bg2); }
-    .admin-kpi-n { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--gold); }
-    .admin-kpi-l { font-size: 11px; color: #555; margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+    /* Metric cards */
+    .admin-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 10px; margin-bottom: 28px; }
+    .admin-kpi { background: #0d0d0d; border: 1px solid rgba(255,255,255,0.06); padding: 18px 20px; transition: border-color 0.2s; }
+    .admin-kpi:hover { border-color: rgba(255,255,255,0.15); }
+    .admin-kpi.kpi-primary { background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.2); }
+    .admin-kpi-label { font-size: 9px; font-family: monospace; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+    .admin-kpi.kpi-primary .admin-kpi-label { color: rgba(201,168,76,0.6); }
+    .admin-kpi-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 34px; letter-spacing: -0.02em; color: var(--text); line-height: 1; }
+    .admin-kpi.kpi-primary .admin-kpi-n { color: var(--gold-b); }
+    .admin-kpi-l { font-size: 10px; font-family: monospace; color: rgba(255,255,255,0.2); margin-top: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
     .admin-contacts-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
     .admin-contact-card { background: var(--bg2); padding: 24px 28px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
     .admin-contact-card:hover { background: var(--bg3); }
@@ -534,7 +577,10 @@
       footer { flex-direction: column; gap: 10px; text-align: center; }
       .roi-layout { grid-template-columns: 1fr; }
       .admin-kpis { grid-template-columns: 1fr 1fr; }
-      .admin-body { padding: 20px; }
+      .adm-content { padding: 16px; }
+      #admin-sidebar { width: 200px; min-width: 200px; }
+      .asb-logo-name { font-size: 12px; }
+      .adm-topbar { padding: 14px 16px; }
       .form-row, .roi-row { grid-template-columns: 1fr; }
       .rev-header { grid-template-columns: 1fr; }
     }
@@ -1023,34 +1069,88 @@
 
 <!-- ==================== ADMIN PANEL ==================== -->
 <div id="admin-panel">
-  <div class="admin-nav">
-    <div class="admin-logo">VICTOR <span>Panel de administración</span></div>
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="adminTab('contacts')">Contactos</button>
-      <button class="admin-tab" onclick="adminTab('reviews-admin')">Valoraciones</button>
-      <button class="admin-tab" onclick="adminTab('roi')">Calculadora ROI</button>
-    </div>
-    <button class="admin-close" onclick="closeAdmin()">✕ Cerrar</button>
-  </div>
 
-  <div class="admin-body">
-
-    <!-- CONTACTS TAB -->
-    <div class="admin-section active" id="tab-contacts">
-      <div class="admin-kpis" id="admin-kpis">
-        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-total">0</div><div class="admin-kpi-l">Contactos totales</div></div>
-        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-web">0</div><div class="admin-kpi-l">Diseño Web</div></div>
-        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-chatbot">0</div><div class="admin-kpi-l">Chatbots / IA</div></div>
-        <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-auto">0</div><div class="admin-kpi-l">Automatización</div></div>
-        <div class="admin-kpi" style="border-color:var(--border-g)"><div class="admin-kpi-n" id="kpi-ganado" style="color:var(--gold-b)">0</div><div class="admin-kpi-l">Clientes ganados</div></div>
+  <!-- SIDEBAR -->
+  <aside id="admin-sidebar">
+    <div class="asb-logo">
+      <svg viewBox="0 0 60 72" fill="none">
+        <line x1="4" y1="4" x2="30" y2="58" stroke="#C9A84C" stroke-width="2.5"/>
+        <polyline points="56,4 30,58 38,70" stroke="#F5D078" stroke-width="3.5" fill="none"/>
+      </svg>
+      <div>
+        <div class="asb-logo-name">VICTOR</div>
+        <div class="asb-logo-sub">Panel admin</div>
       </div>
-      <div id="contacts-list"></div>
+    </div>
+    <div class="asb-user">
+      <div class="asb-avatar">V</div>
+      <div>
+        <div class="asb-uname">Victor</div>
+        <div class="asb-ustatus">
+          <span class="asb-dot"></span>
+          <span class="asb-ustate">Online</span>
+        </div>
+      </div>
+    </div>
+    <nav class="asb-nav">
+      <button class="asb-link active" onclick="adminTab('contacts')" id="asb-btn-contacts">
+        <span class="asb-link-icon">◈</span> Dashboard · Leads
+      </button>
+      <button class="asb-link" onclick="adminTab('reviews-admin')" id="asb-btn-reviews-admin">
+        <span class="asb-link-icon">★</span> Valoraciones
+      </button>
+      <button class="asb-link" onclick="adminTab('roi')" id="asb-btn-roi">
+        <span class="asb-link-icon">⊞</span> Calculadora ROI
+      </button>
+    </nav>
+    <button class="asb-close" onclick="closeAdmin()">✕ &nbsp;Cerrar panel</button>
+  </aside>
+
+  <!-- MAIN -->
+  <div id="admin-main">
+    <div class="adm-topbar">
+      <div class="adm-topbar-title" id="adm-section-title">Dashboard · Leads</div>
+      <div class="adm-topbar-sub">Contactos y métricas en tiempo real</div>
     </div>
 
-    <!-- REVIEWS ADMIN TAB -->
-    <div class="admin-section" id="tab-reviews-admin">
-      <div id="reviews-admin-list"></div>
-    </div>
+    <div class="adm-content">
+
+      <!-- CONTACTS TAB -->
+      <div class="admin-section active" id="tab-contacts">
+        <div class="admin-kpis" id="admin-kpis">
+          <div class="admin-kpi kpi-primary">
+            <div class="admin-kpi-label">Contactos totales</div>
+            <div class="admin-kpi-n" id="kpi-total">0</div>
+            <div class="admin-kpi-l">Leads recibidos</div>
+          </div>
+          <div class="admin-kpi">
+            <div class="admin-kpi-label">Diseño Web</div>
+            <div class="admin-kpi-n" id="kpi-web">0</div>
+            <div class="admin-kpi-l">Solicitudes</div>
+          </div>
+          <div class="admin-kpi">
+            <div class="admin-kpi-label">Chatbots / IA</div>
+            <div class="admin-kpi-n" id="kpi-chatbot">0</div>
+            <div class="admin-kpi-l">Solicitudes</div>
+          </div>
+          <div class="admin-kpi">
+            <div class="admin-kpi-label">Automatización</div>
+            <div class="admin-kpi-n" id="kpi-auto">0</div>
+            <div class="admin-kpi-l">Solicitudes</div>
+          </div>
+          <div class="admin-kpi" style="border-color:rgba(201,168,76,0.15)">
+            <div class="admin-kpi-label" style="color:rgba(201,168,76,0.5)">Clientes ganados</div>
+            <div class="admin-kpi-n" id="kpi-ganado" style="color:var(--gold-b)">0</div>
+            <div class="admin-kpi-l">Estado: ganado</div>
+          </div>
+        </div>
+        <div id="contacts-list"></div>
+      </div>
+
+      <!-- REVIEWS ADMIN TAB -->
+      <div class="admin-section" id="tab-reviews-admin">
+        <div id="reviews-admin-list"></div>
+      </div>
 
     <!-- ROI CALCULATOR TAB -->
     <div class="admin-section" id="tab-roi">
@@ -1152,9 +1252,10 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+
+    </div><!-- /adm-content -->
+  </div><!-- /admin-main -->
+</div><!-- /admin-panel -->
 
 <!-- REVIEW MODAL -->
 <div class="modal-overlay" id="modal-review">
@@ -1434,9 +1535,14 @@ function closeAdmin() {
 }
 
 function adminTab(tab) {
-  document.querySelectorAll('.admin-tab').forEach((t,i) => t.classList.toggle('active', ['contacts','reviews-admin','roi'][i] === tab));
+  document.querySelectorAll('.asb-link').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('asb-btn-' + tab);
+  if (btn) btn.classList.add('active');
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
+  const titles = { contacts: 'Dashboard · Leads', 'reviews-admin': 'Valoraciones', roi: 'Calculadora ROI' };
+  const el = document.getElementById('adm-section-title');
+  if (el) el.textContent = titles[tab] || '';
 }
 
 function renderAdminContacts() {
