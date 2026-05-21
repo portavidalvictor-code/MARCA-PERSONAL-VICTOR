@@ -244,6 +244,13 @@
     .port-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
     .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
     .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
+    .port-scroll-wrap { overflow: hidden; flex: 1; width: 100%; }
+    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 10s ease-in-out infinite; will-change: transform; }
+    @keyframes scrollPort {
+      0%, 8%  { transform: translateY(0); }
+      80%, 92% { transform: translateY(-62%); }
+      100%    { transform: translateY(0); }
+    }
     .port-tag-overlay {
       position: absolute; top: 12px; right: 12px;
       background: var(--gold); color: #080808;
@@ -539,7 +546,7 @@
 <div id="cursor-ring"></div>
 
 <video id="video-bg" autoplay muted loop playsinline>
-  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4">
+  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260511_230229_7c9bc431-46cf-489a-948d-e8144d8eb5d4.mp4" type="video/mp4">
 </video>
 <div id="video-overlay"></div>
 
@@ -744,7 +751,9 @@
           <div class="port-browser-bar">
             <span></span><span></span><span></span>
           </div>
-          <img class="port-preview-img" src="https://image.thum.io/get/width/800/crop/400/https://mompo-fit.vercel.app" alt="Mompofit" loading="lazy" />
+          <div class="port-scroll-wrap">
+            <img class="port-scroll-img" src="https://image.thum.io/get/width/800/fullpage/https://mompo-fit.vercel.app" alt="Mompofit" loading="lazy" />
+          </div>
         </div>
         <div class="port-tag-overlay">Proyecto 1</div>
       </div>
@@ -771,7 +780,9 @@
           <div class="port-browser-bar">
             <span></span><span></span><span></span>
           </div>
-          <img class="port-preview-img" src="https://image.thum.io/get/width/800/crop/400/https://monastery-pelu.vercel.app" alt="Barber Brothers Monastery" loading="lazy" />
+          <div class="port-scroll-wrap">
+            <img class="port-scroll-img" src="https://image.thum.io/get/width/800/fullpage/https://monastery-pelu.vercel.app" alt="Barber Brothers Monastery" loading="lazy" />
+          </div>
         </div>
         <div class="port-tag-overlay">Proyecto 2</div>
       </div>
@@ -1371,6 +1382,19 @@ function checkAdmin() {
   }
 }
 checkAdmin();
+
+// Atajo de teclado: Ctrl + Shift + A abre el admin
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+    if (document.getElementById('admin-panel').classList.contains('open')) {
+      closeAdmin();
+    } else {
+      const pwd = prompt('Contraseña de administrador:');
+      if (pwd === ADMIN_PWD) openAdmin();
+      else if (pwd !== null) alert('Contraseña incorrecta.');
+    }
+  }
+});
 
 function openAdmin() {
   document.getElementById('admin-panel').classList.add('open');
