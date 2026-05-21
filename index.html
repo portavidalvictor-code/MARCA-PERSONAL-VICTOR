@@ -245,10 +245,10 @@
     .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
     .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
     .port-scroll-wrap { overflow: hidden; flex: 1; width: 100%; }
-    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 14s cubic-bezier(0.45,0,0.55,1) infinite; will-change: transform; }
+    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 12s cubic-bezier(0.45,0,0.55,1) infinite; will-change: transform; }
     @keyframes scrollPort {
       0%, 3%   { transform: translateY(0); }
-      80%, 92% { transform: translateY(-68%); }
+      80%, 92% { transform: translateY(-42%); }
       100%     { transform: translateY(0); }
     }
     .port-tag-overlay {
@@ -387,8 +387,9 @@
       background: #050505; overflow: hidden;
       font-family: 'DM Sans', sans-serif;
       flex-direction: row;
+      height: 100vh; width: 100vw;
     }
-    #admin-panel.open { display: flex; }
+    #admin-panel.open { display: flex !important; }
 
     /* Sidebar */
     #admin-sidebar {
@@ -798,7 +799,7 @@
             <span></span><span></span><span></span>
           </div>
           <div class="port-scroll-wrap">
-            <img class="port-scroll-img" src="https://image.thum.io/get/width/800/fullpage/https://mompo-fit.vercel.app" alt="Mompofit" loading="lazy" />
+            <img class="port-scroll-img" src="https://image.thum.io/get/width/1280/allowjs/noanimate/https://mompo-fit.vercel.app" alt="Mompofit" loading="lazy" />
           </div>
         </div>
         <div class="port-tag-overlay">Proyecto 1</div>
@@ -827,7 +828,7 @@
             <span></span><span></span><span></span>
           </div>
           <div class="port-scroll-wrap">
-            <img class="port-scroll-img" src="https://image.thum.io/get/width/800/fullpage/https://monastery-pelu.vercel.app" alt="Barber Brothers Monastery" loading="lazy" />
+            <img class="port-scroll-img" src="https://image.thum.io/get/width/1280/allowjs/noanimate/https://monastery-pelu.vercel.app" alt="Barber Brothers Monastery" loading="lazy" />
           </div>
         </div>
         <div class="port-tag-overlay">Proyecto 2</div>
