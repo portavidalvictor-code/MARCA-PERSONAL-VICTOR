@@ -243,6 +243,7 @@
     .port-preview-bar.med { width: 70%; }
     .port-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
     .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
+    .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
     .port-tag-overlay {
       position: absolute; top: 12px; right: 12px;
       background: var(--gold); color: #080808;
@@ -407,7 +408,7 @@
     .admin-section.active { display: block; }
 
     /* Admin — Contacts */
-    .admin-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+    .admin-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 40px; }
     .admin-kpi { border: 1px solid var(--border); padding: 22px 24px; background: var(--bg2); }
     .admin-kpi-n { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--gold); }
     .admin-kpi-l { font-size: 11px; color: #555; margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -428,6 +429,15 @@
     .acc-service-tag { display: inline-block; border: 1px solid var(--border-g); font-size: 10px; color: var(--gold-d); padding: 2px 8px; letter-spacing: 0.08em; }
     .admin-empty { text-align: center; padding: 60px; color: #333; font-size: 13px; }
     .admin-empty span { display: block; font-size: 28px; margin-bottom: 12px; color: #2a2a2a; }
+    /* Admin — contact estado + notas */
+    .acc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+    .acc-estado { background: var(--bg); border: 1px solid var(--border-g); color: var(--gold); font-size: 11px; padding: 3px 10px; cursor: pointer; font-family: inherit; letter-spacing: 0.08em; }
+    .acc-estado:focus { outline: none; }
+    .acc-notes-wrap { margin-top: 10px; }
+    .acc-notes-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text); font-size: 12px; padding: 8px 10px; resize: none; font-family: inherit; box-sizing: border-box; line-height: 1.5; }
+    .acc-notes-input:focus { outline: none; border-color: var(--border-g); }
+    .acc-notes-save { margin-top: 5px; font-size: 10px; color: var(--gold); border: 1px solid var(--border-g); padding: 4px 14px; background: none; cursor: pointer; letter-spacing: 0.12em; text-transform: uppercase; transition: background 0.2s; }
+    .acc-notes-save:hover { background: var(--gold-dim); }
 
     /* Admin — Reviews */
     .admin-reviews-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
@@ -734,16 +744,7 @@
           <div class="port-browser-bar">
             <span></span><span></span><span></span>
           </div>
-          <div class="port-preview-content">
-            <div class="port-preview-bar gold"></div>
-            <div class="port-preview-bar short"></div>
-            <div class="port-preview-grid">
-              <div class="port-preview-block"></div>
-              <div class="port-preview-block"></div>
-            </div>
-            <div class="port-preview-bar med"></div>
-            <div class="port-preview-bar short"></div>
-          </div>
+          <img class="port-preview-img" src="https://image.thum.io/get/width/800/crop/400/https://mompo-fit.vercel.app" alt="Mompofit" loading="lazy" />
         </div>
         <div class="port-tag-overlay">Proyecto 1</div>
       </div>
@@ -770,16 +771,7 @@
           <div class="port-browser-bar">
             <span></span><span></span><span></span>
           </div>
-          <div class="port-preview-content">
-            <div class="port-preview-bar med"></div>
-            <div class="port-preview-bar short"></div>
-            <div class="port-preview-grid">
-              <div class="port-preview-block"></div>
-              <div class="port-preview-block"></div>
-            </div>
-            <div class="port-preview-bar gold" style="width:50%"></div>
-            <div class="port-preview-bar short"></div>
-          </div>
+          <img class="port-preview-img" src="https://image.thum.io/get/width/800/crop/400/https://monastery-pelu.vercel.app" alt="Barber Brothers Monastery" loading="lazy" />
         </div>
         <div class="port-tag-overlay">Proyecto 2</div>
       </div>
@@ -1023,6 +1015,7 @@
         <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-web">0</div><div class="admin-kpi-l">Diseño Web</div></div>
         <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-chatbot">0</div><div class="admin-kpi-l">Chatbots / IA</div></div>
         <div class="admin-kpi"><div class="admin-kpi-n" id="kpi-auto">0</div><div class="admin-kpi-l">Automatización</div></div>
+        <div class="admin-kpi" style="border-color:var(--border-g)"><div class="admin-kpi-n" id="kpi-ganado" style="color:var(--gold-b)">0</div><div class="admin-kpi-l">Clientes ganados</div></div>
       </div>
       <div id="contacts-list"></div>
     </div>
@@ -1401,20 +1394,31 @@ function renderAdminContacts() {
   const web = contacts.filter(c => c.servicio && c.servicio.toLowerCase().includes('web')).length;
   const chatbot = contacts.filter(c => c.servicio && (c.servicio.toLowerCase().includes('chat') || c.servicio.toLowerCase().includes('ia'))).length;
   const auto = contacts.filter(c => c.servicio && c.servicio.toLowerCase().includes('auto')).length;
+  const ganados = contacts.filter(c => c.estado === 'Cliente').length;
   document.getElementById('kpi-total').textContent = contacts.length;
   document.getElementById('kpi-web').textContent = web;
   document.getElementById('kpi-chatbot').textContent = chatbot;
   document.getElementById('kpi-auto').textContent = auto;
+  document.getElementById('kpi-ganado').textContent = ganados;
 
   const list = document.getElementById('contacts-list');
   if (contacts.length === 0) {
     list.innerHTML = '<div class="admin-empty"><span>📭</span>Aún no hay contactos. Cuando alguien rellene el formulario, aparecerá aquí.</div>';
     return;
   }
-  list.innerHTML = '<div class="admin-contacts-list">' + contacts.map(c => `
+  const estadoColor = { 'Nuevo':'#6ab0ff','Contactado':'#C9A84C','Propuesta':'#7ab8d4','Cliente':'#4caf80','Perdido':'#c44' };
+  list.innerHTML = '<div class="admin-contacts-list">' + contacts.map(c => {
+    const est = c.estado || 'Nuevo';
+    const col = estadoColor[est] || '#aaa';
+    return `
     <div class="admin-contact-card">
-      <div>
-        <div class="acc-name">${c.nombre}</div>
+      <div style="flex:1;min-width:0">
+        <div class="acc-header">
+          <div class="acc-name" style="flex:1">${c.nombre}</div>
+          <select class="acc-estado" style="color:${col}" onchange="updateEstado(${c.id},this.value)">
+            ${['Nuevo','Contactado','Propuesta','Cliente','Perdido'].map(s=>`<option${s===est?' selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
         <div class="acc-meta">
           <span>🏢 ${c.empresa || '—'}</span>
           <span>📂 ${c.tipo || '—'}</span>
@@ -1423,13 +1427,35 @@ function renderAdminContacts() {
         </div>
         ${c.servicio ? `<span class="acc-service-tag">${c.servicio}</span>` : ''}
         ${c.mensaje ? `<div class="acc-msg">${c.mensaje}</div>` : ''}
+        <div class="acc-notes-wrap">
+          <textarea class="acc-notes-input" id="notes-${c.id}" rows="2" placeholder="Notas internas...">${c.notas||''}</textarea>
+          <button class="acc-notes-save" id="notebtn-${c.id}" onclick="saveNote(${c.id})">Guardar nota</button>
+        </div>
       </div>
       <div class="acc-actions">
         <button class="acc-btn wa" onclick="waContact('${encodeURIComponent(c.nombre)}','${encodeURIComponent(c.empresa||'')}','${encodeURIComponent(c.servicio||'')}')">WhatsApp</button>
         <button class="acc-btn del" onclick="deleteContact(${c.id})">Eliminar</button>
       </div>
-    </div>
-  `).join('') + '</div>';
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function updateEstado(id, estado) {
+  const contacts = getContacts().map(c => c.id === id ? {...c, estado} : c);
+  saveContacts(contacts);
+  const ganados = contacts.filter(c => c.estado === 'Cliente').length;
+  document.getElementById('kpi-ganado').textContent = ganados;
+  const estadoColor = { 'Nuevo':'#6ab0ff','Contactado':'#C9A84C','Propuesta':'#7ab8d4','Cliente':'#4caf80','Perdido':'#c44' };
+  const sel = event.target;
+  sel.style.color = estadoColor[estado] || '#aaa';
+}
+
+function saveNote(id) {
+  const val = document.getElementById('notes-'+id).value;
+  saveContacts(getContacts().map(c => c.id === id ? {...c, notas: val} : c));
+  const btn = document.getElementById('notebtn-'+id);
+  btn.textContent = '✓ Guardado';
+  setTimeout(() => btn.textContent = 'Guardar nota', 1600);
 }
 
 function waContact(nombre, empresa, servicio) {
