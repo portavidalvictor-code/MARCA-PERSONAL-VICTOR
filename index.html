@@ -593,6 +593,7 @@
       .rev-header { grid-template-columns: 1fr; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -1410,6 +1411,14 @@ const to = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 to.observe(document.getElementById('tags'));
 
+// ─── SUPABASE ─────────────────────────────────────────────────────────────────
+const _sb = window.supabase
+  ? window.supabase.createClient(
+      'https://xhbdauaipftrryrfnxmw.supabase.co',
+      'sb_publishable_vpTkgxZ4AQwVU41oqjCooA_rZWhVhF7'
+    )
+  : null;
+
 // ─── STORAGE HELPERS ──────────────────────────────────────────────────────────
 function getContacts() { return JSON.parse(localStorage.getItem('vic_contacts') || '[]'); }
 function saveContacts(c) { localStorage.setItem('vic_contacts', JSON.stringify(c)); }
@@ -1432,6 +1441,19 @@ function submitContact(e) {
   const contacts = getContacts();
   contacts.unshift(data);
   saveContacts(contacts);
+
+  // Also save to Supabase so NEXUS dashboard can see it
+  if (_sb) {
+    _sb.from('victor_contacts').insert({
+      nombre: data.nombre,
+      email: data.email || null,
+      telefono: data.telefono || null,
+      servicio: data.servicio || null,
+      mensaje: data.mensaje || null,
+      estado: 'Nuevo',
+      fecha: data.fecha,
+    }).then(({ error }) => { if (error) console.warn('Supabase insert:', error.message); });
+  }
 
   document.getElementById('contact-form').style.display = 'none';
   document.getElementById('form-success').style.display = 'block';
