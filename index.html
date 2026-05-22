@@ -37,17 +37,22 @@
     #cursor {
       position: fixed; width: 8px; height: 8px;
       background: var(--gold); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
+      pointer-events: none; z-index: 30000;
       transform: translate(-50%, -50%);
       transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
     }
     #cursor-ring {
       position: fixed; width: 32px; height: 32px;
       border: 1px solid rgba(201,168,76,0.4); border-radius: 50%;
-      pointer-events: none; z-index: 9998;
+      pointer-events: none; z-index: 29999;
       transform: translate(-50%, -50%);
       transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
     }
+    /* Cursor visible e interactivo dentro del admin */
+    #admin-panel { cursor: auto; }
+    #admin-panel button, #admin-panel select, #admin-panel input,
+    #admin-panel textarea, #admin-panel a { cursor: pointer; }
+    #admin-panel input, #admin-panel textarea { cursor: text; }
 
     /* VIDEO BG */
     #video-bg {
@@ -245,11 +250,13 @@
     .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
     .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
     .port-scroll-wrap { overflow: hidden; flex: 1; width: 100%; }
-    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 12s cubic-bezier(0.45,0,0.55,1) infinite; will-change: transform; }
+    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 7s linear infinite; will-change: transform; }
     @keyframes scrollPort {
-      0%, 3%   { transform: translateY(0); }
-      80%, 92% { transform: translateY(-42%); }
-      100%     { transform: translateY(0); }
+      0%   { transform: translateY(0); }
+      45%  { transform: translateY(-62%); }
+      50%  { transform: translateY(-62%); }
+      95%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
     }
     .port-tag-overlay {
       position: absolute; top: 12px; right: 12px;
@@ -799,7 +806,7 @@
             <span></span><span></span><span></span>
           </div>
           <div class="port-scroll-wrap">
-            <img class="port-scroll-img" src="https://image.thum.io/get/width/1280/allowjs/noanimate/https://mompo-fit.vercel.app" alt="Mompofit" loading="lazy" />
+            <img class="port-scroll-img" id="ss-mompofit" src="" alt="Mompofit" />
           </div>
         </div>
         <div class="port-tag-overlay">Proyecto 1</div>
@@ -828,7 +835,7 @@
             <span></span><span></span><span></span>
           </div>
           <div class="port-scroll-wrap">
-            <img class="port-scroll-img" src="https://image.thum.io/get/width/1280/allowjs/noanimate/https://monastery-pelu.vercel.app" alt="Barber Brothers Monastery" loading="lazy" />
+            <img class="port-scroll-img" id="ss-monastery" src="" alt="Barber Brothers Monastery" />
           </div>
         </div>
         <div class="port-tag-overlay">Proyecto 2</div>
@@ -1145,6 +1152,7 @@
             <div class="admin-kpi-l">Estado: ganado</div>
           </div>
         </div>
+        <div id="admin-pipeline"></div>
         <div id="contacts-list"></div>
       </div>
 
@@ -1307,6 +1315,26 @@
 </div>
 
 <script>
+// ─── PORTFOLIO SCREENSHOTS (Microlink fullpage) ───────────────────────────────
+(function loadScreenshots() {
+  const shots = [
+    { id: 'ss-mompofit',  url: 'https://mompo-fit.vercel.app' },
+    { id: 'ss-monastery', url: 'https://monastery-pelu.vercel.app' },
+  ];
+  shots.forEach(({ id, url }) => {
+    const img = document.getElementById(id);
+    if (!img) return;
+    const api = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&screenshot.fullPage=true&meta=false&embed=screenshot.url`;
+    fetch(api)
+      .then(r => r.json())
+      .then(d => { if (d.data?.screenshot?.url) img.src = d.data.screenshot.url; })
+      .catch(() => {
+        // fallback: thum.io sin fullpage
+        img.src = `https://image.thum.io/get/width/1280/${encodeURIComponent(url)}`;
+      });
+  });
+})();
+
 // ─── CURSOR ───────────────────────────────────────────────────────────────────
 const cur = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
@@ -1557,6 +1585,52 @@ function renderAdminContacts() {
   document.getElementById('kpi-chatbot').textContent = chatbot;
   document.getElementById('kpi-auto').textContent = auto;
   document.getElementById('kpi-ganado').textContent = ganados;
+
+  // Pipeline + tipo de negocio
+  const pipeline = document.getElementById('admin-pipeline');
+  if (pipeline && contacts.length > 0) {
+    const estados = ['Nuevo','Contactado','Propuesta','Cliente','Perdido'];
+    const estColors = { 'Nuevo':'#6ab0ff','Contactado':'#C9A84C','Propuesta':'#7ab8d4','Cliente':'#4caf80','Perdido':'#c44' };
+    const estCounts = estados.map(e => ({ label: e, count: contacts.filter(c => (c.estado||'Nuevo') === e).length, color: estColors[e] }));
+
+    // Tipos de negocio
+    const tiposMap = {};
+    contacts.forEach(c => { const t = c.tipo || 'Otro'; tiposMap[t] = (tiposMap[t]||0)+1; });
+    const topTipos = Object.entries(tiposMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+
+    pipeline.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+      <div style="background:#0d0d0d;border:1px solid rgba(255,255,255,0.06);padding:18px 20px;">
+        <div style="font-size:9px;font-family:monospace;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px;">Pipeline · Estado de leads</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${estCounts.map(e=>`
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);width:80px;">${e.label}</div>
+            <div style="flex:1;background:rgba(255,255,255,0.04);height:6px;border-radius:2px;overflow:hidden;">
+              <div style="background:${e.color};height:100%;width:${contacts.length>0?Math.round(e.count/contacts.length*100):0}%;transition:width 0.5s;"></div>
+            </div>
+            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:${e.color};width:20px;text-align:right;">${e.count}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div style="background:#0d0d0d;border:1px solid rgba(255,255,255,0.06);padding:18px 20px;">
+        <div style="font-size:9px;font-family:monospace;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px;">Top tipos de negocio</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${topTipos.length === 0 ? '<div style="color:#444;font-size:12px;">Sin datos aún</div>' :
+          topTipos.map(([tipo,n])=>`
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="font-size:9px;font-family:monospace;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${tipo}</div>
+            <div style="flex:1;background:rgba(255,255,255,0.04);height:6px;border-radius:2px;overflow:hidden;">
+              <div style="background:rgba(201,168,76,0.5);height:100%;width:${contacts.length>0?Math.round(n/contacts.length*100):0}%;"></div>
+            </div>
+            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--gold);width:20px;text-align:right;">${n}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  } else if (pipeline) {
+    pipeline.innerHTML = '';
+  }
 
   const list = document.getElementById('contacts-list');
   if (contacts.length === 0) {
