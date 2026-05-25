@@ -220,49 +220,25 @@
     }
     .port-card:hover { border-color: var(--border-g); transform: translateY(-4px); }
     .port-preview {
-      width: 100%; height: 220px; background: var(--bg3);
-      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 260px;
       position: relative; overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    .port-preview-inner {
-      width: 85%; height: 80%;
-      border: 1px solid var(--border-g);
-      background: var(--bg);
-      display: flex; flex-direction: column;
-      overflow: hidden;
+    .port-preview video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
     }
-    .port-browser-bar {
-      height: 20px; background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; padding: 0 8px; gap: 4px;
+    .port-preview-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 100%);
+      display: flex; align-items: flex-end; padding: 16px 20px;
     }
-    .port-browser-bar span { width: 6px; height: 6px; border-radius: 50%; }
-    .port-browser-bar span:nth-child(1) { background: #ff5f57; }
-    .port-browser-bar span:nth-child(2) { background: #febc2e; }
-    .port-browser-bar span:nth-child(3) { background: #28c840; }
-    .port-preview-content { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-    .port-preview-bar { height: 6px; background: var(--border-g); border-radius: 2px; }
-    .port-preview-bar.gold { background: rgba(201,168,76,0.3); width: 60%; }
-    .port-preview-bar.short { width: 40%; }
-    .port-preview-bar.med { width: 70%; }
-    .port-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
-    .port-preview-block { height: 28px; background: var(--border); border-radius: 2px; }
-    .port-preview-img { width: 100%; flex: 1; object-fit: cover; object-position: top center; display: block; }
-    .port-scroll-wrap { overflow: hidden; flex: 1; width: 100%; }
-    .port-scroll-img { width: 100%; height: auto; display: block; animation: scrollPort 7s linear infinite; will-change: transform; }
-    @keyframes scrollPort {
-      0%   { transform: translateY(0); }
-      45%  { transform: translateY(-62%); }
-      50%  { transform: translateY(-62%); }
-      95%  { transform: translateY(0); }
-      100% { transform: translateY(0); }
-    }
-    .port-tag-overlay {
-      position: absolute; top: 12px; right: 12px;
-      background: var(--gold); color: #080808;
-      font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
-      text-transform: uppercase; padding: 4px 10px;
+    .port-preview-label {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: rgba(240,237,228,0.9); letter-spacing: 0.06em; text-transform: uppercase;
+      background: rgba(0,0,0,0.35); padding: 5px 12px;
+      border: 1px solid rgba(201,168,76,0.3); backdrop-filter: blur(4px);
     }
     .port-info { padding: 28px 30px; }
     .port-tags { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -802,15 +778,12 @@
   <div class="port-grid">
     <div class="port-card reveal">
       <div class="port-preview">
-        <div class="port-preview-inner">
-          <div class="port-browser-bar">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="port-scroll-wrap">
-            <img class="port-scroll-img" id="ss-mompofit" src="" alt="Mompofit" />
-          </div>
+        <video autoplay muted loop playsinline>
+          <source src="https://videos.pexels.com/video-files/3209241/3209241-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        </video>
+        <div class="port-preview-overlay">
+          <span class="port-preview-label">Entrenador Personal</span>
         </div>
-        <div class="port-tag-overlay">Proyecto 1</div>
       </div>
       <div class="port-info">
         <div class="port-tags">
@@ -831,15 +804,12 @@
 
     <div class="port-card reveal" style="transition-delay:0.15s">
       <div class="port-preview">
-        <div class="port-preview-inner">
-          <div class="port-browser-bar">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="port-scroll-wrap">
-            <img class="port-scroll-img" id="ss-monastery" src="" alt="Barber Brothers Monastery" />
-          </div>
+        <video autoplay muted loop playsinline>
+          <source src="https://videos.pexels.com/video-files/7697073/7697073-hd_1920_1080_30fps.mp4" type="video/mp4" />
+        </video>
+        <div class="port-preview-overlay">
+          <span class="port-preview-label">Barbería Premium</span>
         </div>
-        <div class="port-tag-overlay">Proyecto 2</div>
       </div>
       <div class="port-info">
         <div class="port-tags">
@@ -1316,25 +1286,6 @@
 </div>
 
 <script>
-// ─── PORTFOLIO SCREENSHOTS (Microlink fullpage) ───────────────────────────────
-(function loadScreenshots() {
-  const shots = [
-    { id: 'ss-mompofit',  url: 'https://mompo-fit.vercel.app' },
-    { id: 'ss-monastery', url: 'https://monastery-pelu.vercel.app' },
-  ];
-  shots.forEach(({ id, url }) => {
-    const img = document.getElementById(id);
-    if (!img) return;
-    const api = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&screenshot.fullPage=true&meta=false&embed=screenshot.url`;
-    fetch(api)
-      .then(r => r.json())
-      .then(d => { if (d.data?.screenshot?.url) img.src = d.data.screenshot.url; })
-      .catch(() => {
-        // fallback: thum.io sin fullpage
-        img.src = `https://image.thum.io/get/width/1280/${encodeURIComponent(url)}`;
-      });
-  });
-})();
 
 // ─── CURSOR ───────────────────────────────────────────────────────────────────
 const cur = document.getElementById('cursor');
