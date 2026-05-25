@@ -155,18 +155,44 @@
     /* SERVICES */
     #services { border-top: 1px solid var(--border); }
     .svc-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
-    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-    .svc-card { background: var(--bg); padding: 50px 38px; position: relative; overflow: hidden; transition: background 0.3s; }
-    .svc-card:hover { background: var(--bg2); }
-    .svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; height: 1px; width: 0; background: var(--gold); transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
-    .svc-card:hover::after { width: 100%; }
-    .svc-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.5s cubic-bezier(0.4,0,0.2,1) 0.1s; }
-    .svc-card:hover::before { width: 40%; }
-    .svc-num { font-family: 'Syne', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: var(--gold-d); margin-bottom: 36px; }
-    .svc-icon { width: 38px; height: 38px; color: var(--gold); margin-bottom: 22px; transition: transform 0.3s; }
-    .svc-card:hover .svc-icon { transform: scale(1.1); }
-    .svc-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 14px; }
-    .svc-desc { font-size: 13px; line-height: 1.75; color: #666; }
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .svc-card {
+      background: rgba(13,13,13,0.85);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 44px 36px;
+      position: relative; overflow: hidden;
+      transition: border-color 0.4s, transform 0.4s, background 0.4s;
+    }
+    .svc-card:hover {
+      border-color: rgba(201,168,76,0.2);
+      background: rgba(20,15,5,0.95);
+      transform: translateY(-5px);
+    }
+    .svc-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .svc-card:hover::before { opacity: 1; }
+    .svc-card::after {
+      content: ''; position: absolute; bottom: -60px; right: -60px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.4s; pointer-events: none;
+    }
+    .svc-card:hover::after { opacity: 1; }
+    .svc-accent {
+      position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 2px; background: linear-gradient(180deg, transparent, rgba(201,168,76,0.4), transparent);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .svc-card:hover .svc-accent { opacity: 1; }
+    .svc-num { font-family: 'Syne', sans-serif; font-size: 10px; letter-spacing: 0.22em; color: rgba(201,168,76,0.3); margin-bottom: 30px; }
+    .svc-icon { width: 36px; height: 36px; color: var(--gold); margin-bottom: 20px; transition: transform 0.3s, filter 0.3s; }
+    .svc-card:hover .svc-icon { transform: scale(1.08) translateY(-2px); filter: drop-shadow(0 0 6px rgba(201,168,76,0.4)); }
+    .svc-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .svc-desc { font-size: 13px; line-height: 1.78; color: #5A5A5A; }
+    .svc-tag { display: inline-block; margin-top: 20px; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(201,168,76,0.35); border: 1px solid rgba(201,168,76,0.12); padding: 3px 10px; }
 
     /* N8N EXAMPLE */
     .n8n-block {
@@ -208,6 +234,122 @@
     }
     .n8n-line-v { width: 1px; height: 24px; background: var(--border-g); }
     .n8n-label { font-size: 9px; color: #3a3a3a; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* HERO STATS */
+    .hero-stats {
+      display: flex; align-items: center; gap: 28px;
+      margin-top: 48px; padding-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      opacity: 0; animation: fadeup 0.8s ease 2.4s forwards;
+    }
+    .hs-item { display: flex; flex-direction: column; }
+    .hs-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.03em; color: var(--gold-b); line-height: 1; }
+    .hs-l { font-size: 10px; color: #3D3D3D; margin-top: 5px; line-height: 1.4; letter-spacing: 0.04em; }
+    .hs-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.07); flex-shrink: 0; }
+
+    /* WHATSAPP FLOAT */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9000;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #1aad54);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 28px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.2);
+      text-decoration: none; cursor: none;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+      animation: wafloat 3s ease-in-out infinite;
+    }
+    @keyframes wafloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+    .wa-float:hover { transform: translateY(-4px) scale(1.08) !important; box-shadow: 0 8px 36px rgba(37,211,102,0.5); animation: none; }
+    .wa-float::before {
+      content: ''; position: absolute; inset: -5px; border-radius: 50%;
+      border: 1.5px solid rgba(37,211,102,0.25);
+      animation: waring 2.5s ease-in-out infinite;
+    }
+    @keyframes waring { 0%,100%{transform:scale(1);opacity:0.6} 50%{transform:scale(1.15);opacity:0} }
+
+    /* MOBILE STICKY CTA */
+    .mobile-cta {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 8999;
+      padding: 12px 20px; gap: 10px; align-items: center;
+      background: rgba(8,8,8,0.97); backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .mobile-cta a {
+      flex: 1; padding: 13px 16px; text-align: center;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      border-radius: 2px; transition: all 0.2s;
+    }
+    .mobile-cta .mwa { background: #25D366; color: #050505; }
+    .mobile-cta .mct { background: transparent; border: 1px solid var(--border-g); color: var(--gold); }
+    @media (max-width: 768px) {
+      .mobile-cta { display: flex; }
+      #hero { grid-template-columns: 1fr; padding: 120px 28px 60px; }
+      .hero-v-wrap { display: none; }
+      section { padding: 80px 28px; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .svc-header { grid-template-columns: 1fr; gap: 20px; }
+      .port-grid { grid-template-columns: 1fr; }
+      .port-header { grid-template-columns: 1fr; gap: 20px; }
+      .fw-inner { grid-template-columns: 1fr; gap: 40px; }
+      .ab-inner { grid-template-columns: 1fr; gap: 40px; }
+      .ab-visual { display: none; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      footer { padding: 20px 28px; flex-direction: column; gap: 8px; text-align: center; }
+      .hero-stats { gap: 16px; }
+      .hs-n { font-size: 22px; }
+      .rev-grid { grid-template-columns: 1fr; }
+    }
+
+    /* PORT METRIC BADGE */
+    .port-metric {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(8,8,8,0.8); backdrop-filter: blur(10px);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 5px 11px;
+      font-family: 'Syne', sans-serif; font-size: 10px;
+      color: var(--gold); font-weight: 700; letter-spacing: 0.06em;
+    }
+    .port-result {
+      position: absolute; bottom: 14px; left: 14px;
+      background: rgba(0,255,135,0.1); backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,255,135,0.2); padding: 4px 10px;
+      font-size: 10px; color: #00FF87; font-weight: 600; letter-spacing: 0.06em;
+    }
+    .port-card { transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s; }
+    .port-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-6px); box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
+
+    /* SECTION IMPROVEMENTS */
+    .s-label { font-size: 10px; letter-spacing: 0.3em; }
+    .s-divider {
+      width: 100%; height: 1px; margin: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.15) 30%, rgba(201,168,76,0.08) 70%, transparent 100%);
+    }
+
+    /* PREMIUM N8N BLOCK */
+    .n8n-block {
+      margin-top: 60px; border: 1px solid rgba(201,168,76,0.12);
+      padding: 40px; background: rgba(12,9,3,0.8);
+      backdrop-filter: blur(12px); position: relative; overflow: hidden;
+    }
+    .n8n-block::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    /* TRUST BAR */
+    .trust-bar {
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+      padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.04);
+      margin-top: 56px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 11px; color: #444; letter-spacing: 0.06em;
+    }
+    .trust-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold-d); flex-shrink: 0; }
 
     /* PORTFOLIO */
     #portfolio { border-top: 1px solid var(--border); background: var(--bg2); }
@@ -621,19 +763,41 @@
     </svg>
   </div>
   <div class="hero-text">
-    <div class="hero-badge">Diseño Web · IA · Automatización</div>
+    <div class="hero-badge">Automatización IA · Diseño Web · Negocios Locales</div>
     <h1 class="hero-name">VICTOR</h1>
     <p class="hero-tagline">
-      <strong>Transformo negocios locales</strong> en experiencias digitales que no se olvidan.
+      <strong>Tu negocio, convertido en una máquina digital.</strong><br/>
+      Web premium + IA 24/7 + automatización completa. Sin plantillas. Sin límites.
     </p>
     <div class="hero-ctas">
-      <a href="#contact" class="btn-gold">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      <a href="https://wa.me/34693848285" target="_blank" class="btn-gold">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/>
         </svg>
-        Hablar con Victor
+        Hablar ahora
       </a>
-      <a href="#portfolio" class="btn-outline">Ver proyectos</a>
+      <a href="#services" class="btn-outline">Ver servicios →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs-item">
+        <span class="hs-n">47+</span>
+        <span class="hs-l">Negocios<br/>transformados</span>
+      </div>
+      <div class="hs-sep"></div>
+      <div class="hs-item">
+        <span class="hs-n">134</span>
+        <span class="hs-l">Automatizaciones<br/>activas</span>
+      </div>
+      <div class="hs-sep"></div>
+      <div class="hs-item">
+        <span class="hs-n">24/7</span>
+        <span class="hs-l">Bots activos<br/>sin parar</span>
+      </div>
+      <div class="hs-sep"></div>
+      <div class="hs-item">
+        <span class="hs-n">97%</span>
+        <span class="hs-l">Clientes<br/>satisfechos</span>
+      </div>
     </div>
   </div>
 </section>
@@ -642,16 +806,17 @@
 <section id="services">
   <div class="svc-header reveal">
     <div>
-      <p class="s-label">Lo que hago</p>
-      <h2 class="s-title">Servicios que<br/>mueven negocios</h2>
+      <p class="s-label">Stack tecnológico</p>
+      <h2 class="s-title">Todo lo que necesita<br/>tu negocio para dominar</h2>
     </div>
     <p class="s-sub">
-      Cada proyecto es una oportunidad de transformar un negocio invisible en una presencia que domina su sector.
+      No vendemos servicios sueltos. Construimos sistemas completos que trabajan para ti las 24 horas, generan leads y eliminan trabajo manual.
     </p>
   </div>
 
   <div class="svc-grid">
     <div class="svc-card reveal">
+      <div class="svc-accent"></div>
       <p class="svc-num">01</p>
       <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
         <rect x="2" y="6" width="36" height="28" rx="1.5"/>
@@ -659,40 +824,105 @@
         <circle cx="8" cy="10" r="1.5" fill="currentColor" stroke="none"/>
         <circle cx="13" cy="10" r="1.5" fill="currentColor" stroke="none"/>
         <circle cx="18" cy="10" r="1.5" fill="currentColor" stroke="none"/>
-        <line x1="9" y1="22" x2="20" y2="22" stroke-width="2"/>
-        <line x1="9" y1="27" x2="16" y2="27"/>
+        <line x1="9" y1="22" x2="22" y2="22" stroke-width="2"/>
+        <line x1="9" y1="28" x2="17" y2="28"/>
+        <rect x="26" y="20" width="10" height="10" rx="1" stroke-width="1"/>
       </svg>
-      <h3 class="svc-name">Diseño Web</h3>
-      <p class="svc-desc">Páginas que detienen el scroll. Efectos 3D, animaciones de impacto y arquitecturas visuales que convierten visitas en clientes desde el primer segundo.</p>
+      <h3 class="svc-name">Web Premium</h3>
+      <p class="svc-desc">Diseños que detienen el scroll y convierten visitas en clientes desde el primer segundo. Animaciones de impacto, arquitectura visual estratégica, velocidad de carga élite.</p>
+      <span class="svc-tag">Next.js · Framer Motion</span>
     </div>
 
-    <div class="svc-card reveal" style="transition-delay:0.12s">
+    <div class="svc-card reveal" style="transition-delay:0.08s">
+      <div class="svc-accent"></div>
       <p class="svc-num">02</p>
       <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="6" y="4" width="28" height="20" rx="1.5"/>
-        <line x1="11" y1="11" x2="20" y2="11"/>
-        <line x1="11" y1="16" x2="17" y2="16"/>
-        <path d="M16 24 L16 32 L28 32" stroke-width="1.5"/>
-        <circle cx="32" cy="32" r="4"/>
-        <circle cx="32" cy="32" r="1.5" fill="currentColor" stroke="none"/>
+        <circle cx="20" cy="16" r="8"/>
+        <path d="M17 14 L20 20 L23 14" stroke-width="1.5"/>
+        <circle cx="20" cy="16" r="2" fill="currentColor" stroke="none"/>
+        <path d="M8 36 C8 28 32 28 32 36" stroke-width="1.5"/>
+        <line x1="28" y1="8" x2="36" y2="4" stroke-dasharray="2 2"/>
+        <line x1="28" y1="16" x2="36" y2="16" stroke-dasharray="2 2"/>
+        <line x1="28" y1="24" x2="36" y2="28" stroke-dasharray="2 2"/>
       </svg>
-      <h3 class="svc-name">Chatbots con IA</h3>
-      <p class="svc-desc">Agentes inteligentes que atienden a tus clientes 24/7, gestionan reservas y responden preguntas. <strong style="color:var(--text);font-weight:400">Experto en automatizaciones para empresas.</strong> Tu negocio nunca duerme.</p>
+      <h3 class="svc-name">Agentes IA</h3>
+      <p class="svc-desc">Chatbots con inteligencia artificial que entienden a tus clientes, responden preguntas complejas, gestionan objeciones y cierran reservas. Entrenados para tu negocio exacto.</p>
+      <span class="svc-tag">Claude AI · GPT-4</span>
     </div>
 
-    <div class="svc-card reveal" style="transition-delay:0.24s">
+    <div class="svc-card reveal" style="transition-delay:0.16s">
+      <div class="svc-accent"></div>
       <p class="svc-num">03</p>
       <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="8" cy="20" r="4"/>
         <circle cx="32" cy="8" r="4"/>
         <circle cx="32" cy="32" r="4"/>
-        <line x1="12" y1="18.5" x2="28" y2="10"/>
-        <line x1="12" y1="21.5" x2="28" y2="30"/>
+        <line x1="11.5" y1="18.5" x2="28.5" y2="9.5"/>
+        <line x1="11.5" y1="21.5" x2="28.5" y2="30.5"/>
         <line x1="8" y1="16" x2="8" y2="10" stroke-dasharray="2 2"/>
+        <circle cx="20" cy="14" r="2.5" stroke="currentColor"/>
+        <circle cx="20" cy="26" r="2.5" stroke="currentColor"/>
       </svg>
-      <h3 class="svc-name">Automatización</h3>
-      <p class="svc-desc">Elimina tareas repetitivas. Conecta herramientas, automatiza seguimientos y deja que la tecnología trabaje mientras tú creces. Ahorra horas y costes reales cada mes.</p>
+      <h3 class="svc-name">Automatización Total</h3>
+      <p class="svc-desc">Conecta todas tus herramientas. CRM, email, facturación, seguimientos, Google Calendar — todo en un flujo automático. Elimina horas de trabajo manual cada semana.</p>
+      <span class="svc-tag">n8n · Zapier · Make</span>
     </div>
+
+    <div class="svc-card reveal" style="transition-delay:0.24s">
+      <div class="svc-accent"></div>
+      <p class="svc-num">04</p>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M32 20C32 26.627 26.627 32 20 32C17.395 32 14.983 31.148 13.03 29.702L6 32L8.299 25.035C6.849 23.08 6 20.641 6 18C6 11.373 11.373 6 18 6C24.627 6 30 11.373 30 18"/>
+        <circle cx="32" cy="24" r="6" fill="rgba(37,211,102,0.15)" stroke="#25D366"/>
+        <path d="M30 24L31.5 25.5L34.5 22.5" stroke="#25D366" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <h3 class="svc-name">WhatsApp 24/7</h3>
+      <p class="svc-desc">Tu número de WhatsApp convertido en un comercial autónomo. Responde al instante, califica leads, envía catálogos y gestiona citas automáticamente. Sin intervención humana.</p>
+      <span class="svc-tag">WhatsApp API · Bot IA</span>
+    </div>
+
+    <div class="svc-card reveal" style="transition-delay:0.32s">
+      <div class="svc-accent"></div>
+      <p class="svc-num">05</p>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="4" y="6" width="32" height="30" rx="1.5"/>
+        <line x1="4" y1="16" x2="36" y2="16"/>
+        <line x1="14" y1="6" x2="14" y2="16"/>
+        <line x1="26" y1="6" x2="26" y2="16"/>
+        <rect x="10" y="21" width="8" height="7" rx="1" fill="rgba(201,168,76,0.15)"/>
+        <line x1="22" y1="23" x2="30" y2="23"/>
+        <line x1="22" y1="27" x2="27" y2="27"/>
+      </svg>
+      <h3 class="svc-name">Sistema de Reservas</h3>
+      <p class="svc-desc">Acabas con las llamadas para pedir cita. Los clientes reservan solos, reciben confirmación automática, recordatorios y reagendan sin molestar a nadie. Conectado a Google Calendar.</p>
+      <span class="svc-tag">Google Cal · Calendario</span>
+    </div>
+
+    <div class="svc-card reveal" style="transition-delay:0.40s">
+      <div class="svc-accent"></div>
+      <p class="svc-num">06</p>
+      <svg class="svc-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="4" y="4" width="32" height="32" rx="1.5"/>
+        <line x1="4" y1="14" x2="36" y2="14"/>
+        <line x1="14" y1="4" x2="14" y2="36"/>
+        <polyline points="20,20 24,18 28,22 34,16"/>
+        <circle cx="20" cy="20" r="1.5" fill="currentColor" stroke="none"/>
+        <circle cx="24" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+        <circle cx="28" cy="22" r="1.5" fill="currentColor" stroke="none"/>
+      </svg>
+      <h3 class="svc-name">IA para Negocios</h3>
+      <p class="svc-desc">Analiza datos de tu negocio, genera informes automáticos, predice patrones de clientes y toma decisiones basadas en datos reales. Tu negocio dirigido por inteligencia artificial.</p>
+      <span class="svc-tag">Analytics · Reporting IA</span>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar reveal" style="transition-delay:0.5s">
+    <div class="trust-item"><div class="trust-dot"></div>Proyectos entregados en menos de 2 semanas</div>
+    <div class="trust-item"><div class="trust-dot"></div>Disponible 7 días a la semana</div>
+    <div class="trust-item"><div class="trust-dot"></div>Sin contratos de permanencia</div>
+    <div class="trust-item"><div class="trust-dot"></div>Revisiones ilimitadas hasta aprobación</div>
+    <div class="trust-item"><div class="trust-dot"></div>Soporte post-entrega incluido</div>
   </div>
 
   <!-- N8N EXAMPLE -->
@@ -784,6 +1014,8 @@
         <div class="port-preview-overlay">
           <span class="port-preview-label">Entrenador Personal</span>
         </div>
+        <div class="port-metric">Proyecto Real</div>
+        <div class="port-result">+340% leads</div>
       </div>
       <div class="port-info">
         <div class="port-tags">
@@ -810,6 +1042,8 @@
         <div class="port-preview-overlay">
           <span class="port-preview-label">Barbería Premium</span>
         </div>
+        <div class="port-metric">Proyecto Real</div>
+        <div class="port-result">Reservas automáticas</div>
       </div>
       <div class="port-info">
         <div class="port-tags">
@@ -890,24 +1124,24 @@
   <div class="ab-inner">
     <div class="reveal">
       <p class="s-label">Sobre mí</p>
-      <h2 class="s-title">Formal.<br/>Obsesionado<br/>con mejorar.</h2>
+      <h2 class="s-title">Construido<br/>para escalar.<br/>Obsesionado.</h2>
       <p class="ab-bio">
-        Soy Victor. <strong>Diseño experiencias digitales que hacen que negocios locales compitan al nivel de las grandes marcas.</strong>
+        Soy Victor. <strong>Convierto negocios locales en máquinas digitales que generan leads, cierran ventas y operan en piloto automático.</strong>
         <br/><br/>
-        Cada día estudio, experimento y mejoro. No vendo plantillas — construyo presencias digitales que generan resultados reales, con tecnología de vanguardia y atención obsesiva al detalle.
+        No vendo plantillas. No uso atajos. Cada sistema que construyo está diseñado para durar, escalar y generar retorno real desde el primer mes.
       </p>
       <div class="stats">
         <div class="stat">
-          <span class="stat-n">100%</span>
-          <span class="stat-l">Diseños únicos,<br/>sin plantillas genéricas</span>
+          <span class="stat-n">47+</span>
+          <span class="stat-l">Negocios locales<br/>transformados</span>
         </div>
         <div class="stat">
-          <span class="stat-n">24/7</span>
-          <span class="stat-l">Chatbots activos que<br/>nunca duermen</span>
+          <span class="stat-n">134</span>
+          <span class="stat-l">Automatizaciones<br/>activas ahora mismo</span>
         </div>
         <div class="stat">
-          <span class="stat-n">∞</span>
-          <span class="stat-l">Ganas de que<br/>tu negocio crezca</span>
+          <span class="stat-n">€8K+</span>
+          <span class="stat-l">Generados/mes para<br/>clientes en total</span>
         </div>
       </div>
     </div>
@@ -1030,6 +1264,26 @@
   <span class="ft-gold">© 2025</span>
 </footer>
 
+<!-- WHATSAPP FLOAT BUTTON -->
+<a href="https://wa.me/34693848285" class="wa-float" target="_blank" rel="noopener" title="Hablar por WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/>
+  </svg>
+</a>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mobile-cta">
+  <a href="https://wa.me/34693848285" class="mwa" target="_blank" rel="noopener">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="margin-right:6px;vertical-align:middle">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.404A9.956 9.956 0 0011.999 22c5.522 0 10-4.477 10-10S17.521 2 11.999 2z"/>
+    </svg>
+    WhatsApp
+  </a>
+  <a href="#contact" class="mct">Pedir info →</a>
+</div>
+
 <!-- ADMIN LOGIN MODAL -->
 <div id="admin-login-modal" style="display:none;position:fixed;inset:0;z-index:20000;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;backdrop-filter:blur(8px);">
   <div style="background:#0d0d0d;border:1px solid #2C1F06;padding:40px 48px;min-width:320px;text-align:center;">
@@ -1044,7 +1298,7 @@
 </div>
 
 <!-- ADMIN FLOATING BUTTON -->
-<button onclick="showAdminLogin()" title="Admin" style="position:fixed;bottom:24px;right:24px;z-index:9000;width:40px;height:40px;background:#0d0d0d;border:1px solid #2C1F06;color:#C9A84C;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.35;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.35'">⚙</button>
+<button onclick="showAdminLogin()" title="Admin" style="position:fixed;bottom:24px;left:24px;z-index:9000;width:34px;height:34px;background:#0d0d0d;border:1px solid #1a1a1a;color:#333;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.25;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.25'">⚙</button>
 
 <!-- ==================== ADMIN PANEL ==================== -->
 <div id="admin-panel">
