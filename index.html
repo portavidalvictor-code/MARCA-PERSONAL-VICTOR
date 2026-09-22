@@ -289,6 +289,8 @@
       section { padding: 80px 28px; }
       .svc-grid { grid-template-columns: 1fr; }
       .svc-header { grid-template-columns: 1fr; gap: 20px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.featured { transform: none; }
       .port-grid { grid-template-columns: 1fr; }
       .port-header { grid-template-columns: 1fr; gap: 20px; }
       .fw-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -350,6 +352,37 @@
       font-size: 11px; color: #444; letter-spacing: 0.06em;
     }
     .trust-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold-d); flex-shrink: 0; }
+
+    /* PRICING / SAAS PLANS */
+    #pricing { border-top: 1px solid var(--border); background: var(--bg2); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+    .price-card {
+      background: var(--bg); border: 1px solid var(--border-g);
+      padding: 40px 32px; display: flex; flex-direction: column;
+      position: relative; transition: border-color 0.3s, transform 0.3s;
+    }
+    .price-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-4px); }
+    .price-card.featured {
+      border-color: var(--gold); background: rgba(20,15,5,0.9);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .price-badge {
+      position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: #080808; font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 5px 16px; white-space: nowrap;
+    }
+    .price-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+    .price-amount { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+    .price-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 42px; letter-spacing: -0.02em; color: var(--text); line-height: 1; }
+    .price-period { font-size: 13px; color: #666; }
+    .price-setup { font-size: 12px; color: #555; margin-bottom: 24px; }
+    .price-desc { font-size: 13px; color: #777; line-height: 1.7; margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--border); }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 32px; flex: 1; }
+    .price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #999; line-height: 1.5; }
+    .price-features li svg { flex-shrink: 0; margin-top: 2px; color: var(--gold); }
+    .price-cta { text-align: center; justify-content: center; width: 100%; }
+    .pricing-note { text-align: center; margin-top: 44px; font-size: 12px; color: #555; letter-spacing: 0.04em; }
 
     /* PORTFOLIO */
     #portfolio { border-top: 1px solid var(--border); background: var(--bg2); }
@@ -698,7 +731,8 @@
       .hero-ctas { justify-content: center; }
       section { padding: 80px 24px; }
       .svc-header, .fw-inner, .ab-inner, .port-header, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-      .svc-grid, .port-grid, .rev-grid { grid-template-columns: 1fr; }
+      .svc-grid, .port-grid, .rev-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.featured { transform: none; }
       .ab-visual { display: none; }
       footer { flex-direction: column; gap: 10px; text-align: center; }
       .roi-layout { grid-template-columns: 1fr; }
@@ -736,6 +770,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="#services">Servicios</a></li>
+    <li><a href="#pricing">Planes</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#reviews">Valoraciones</a></li>
     <li><a href="#about">Sobre mí</a></li>
@@ -776,7 +811,7 @@
         </svg>
         Hablar ahora
       </a>
-      <a href="#services" class="btn-outline">Ver servicios →</a>
+      <a href="#pricing" class="btn-outline">Ver planes →</a>
     </div>
     <div class="hero-stats">
       <div class="hs-item">
@@ -991,6 +1026,78 @@
       </div>
     </div>
   </div>
+</section>
+
+<!-- PRICING / SAAS PLANS -->
+<section id="pricing">
+  <div class="svc-header reveal">
+    <div>
+      <p class="s-label">Planes</p>
+      <h2 class="s-title">Elige tu sistema.<br/>Empieza a escalar hoy.</h2>
+    </div>
+    <p class="s-sub">
+      Automatización lista para funcionar desde el primer día. Precio cerrado, sin sorpresas, sin permanencia.
+    </p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <p class="price-name">Starter</p>
+      <div class="price-amount">
+        <span class="price-num">39€</span>
+        <span class="price-period">/ mes</span>
+      </div>
+      <p class="price-setup">+ 149€ configuración inicial (pago único)</p>
+      <p class="price-desc">Para negocios que quieren dejar de perder mensajes y responder al instante, sin intervención manual.</p>
+      <ul class="price-features">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Bot de WhatsApp con IA entrenado en tu negocio</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Respuestas automáticas 24/7</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Hasta 500 conversaciones/mes</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Panel de conversaciones básico</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Soporte por email</li>
+      </ul>
+      <a href="https://wa.me/34693848285?text=Hola%20Victor%2C%20quiero%20info%20del%20plan%20Starter" target="_blank" class="btn-outline price-cta">Empezar</a>
+    </div>
+
+    <div class="price-card featured reveal" style="transition-delay:0.1s">
+      <span class="price-badge">Más popular</span>
+      <p class="price-name">Pro</p>
+      <div class="price-amount">
+        <span class="price-num">89€</span>
+        <span class="price-period">/ mes</span>
+      </div>
+      <p class="price-setup">+ 349€ configuración inicial (pago único)</p>
+      <p class="price-desc">El sistema completo: tu negocio recibe, responde, reserva y hace seguimiento sin que muevas un dedo.</p>
+      <ul class="price-features">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Todo lo del plan Starter</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Reservas automáticas conectadas a Google Calendar</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Automatización de seguimientos (n8n)</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>CRM básico de leads incluido</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Conversaciones ilimitadas</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Soporte prioritario por WhatsApp</li>
+      </ul>
+      <a href="https://wa.me/34693848285?text=Hola%20Victor%2C%20quiero%20info%20del%20plan%20Pro" target="_blank" class="btn-gold price-cta">Empezar ahora</a>
+    </div>
+
+    <div class="price-card reveal" style="transition-delay:0.2s">
+      <p class="price-name">Business</p>
+      <div class="price-amount">
+        <span class="price-num">A medida</span>
+      </div>
+      <p class="price-setup">Presupuesto según alcance del proyecto</p>
+      <p class="price-desc">Para negocios con procesos complejos, varios canales o integraciones con sistemas propios.</p>
+      <ul class="price-features">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Todo lo del plan Pro</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Integraciones a medida (CRM, facturación, ERP)</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Múltiples agentes IA por canal</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dashboard analítico avanzado</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Gestor de cuenta dedicado</li>
+      </ul>
+      <a href="https://wa.me/34693848285?text=Hola%20Victor%2C%20quiero%20hablar%20del%20plan%20Business" target="_blank" class="btn-outline price-cta">Hablar con Victor</a>
+    </div>
+  </div>
+
+  <p class="pricing-note reveal" style="transition-delay:0.3s">Sin permanencia · cancela cuando quieras · soporte incluido en todos los planes</p>
 </section>
 
 <!-- PORTFOLIO -->
