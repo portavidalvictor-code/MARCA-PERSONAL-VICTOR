@@ -383,6 +383,11 @@
     .price-features li svg { flex-shrink: 0; margin-top: 2px; color: var(--gold); }
     .price-cta { text-align: center; justify-content: center; width: 100%; }
     .pricing-note { text-align: center; margin-top: 44px; font-size: 12px; color: #555; letter-spacing: 0.04em; }
+    .price-tabs { display: flex; justify-content: center; gap: 6px; margin: 0 auto 44px; padding: 5px; width: fit-content; border: 1px solid var(--border); border-radius: 100px; background: rgba(255,255,255,0.02); }
+    .price-tab { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; padding: 10px 22px; border-radius: 100px; border: none; background: transparent; color: #888; cursor: pointer; transition: background .3s, color .3s; }
+    .price-tab:hover { color: var(--text); }
+    .price-tab.active { background: var(--gold); color: #080808; }
+    .price-panel[hidden] { display: none; }
 
     /* PORTFOLIO */
     #portfolio { border-top: 1px solid var(--border); background: var(--bg2); }
@@ -1033,13 +1038,81 @@
   <div class="svc-header reveal">
     <div>
       <p class="s-label">Planes</p>
-      <h2 class="s-title">Elige tu sistema.<br/>Empieza a escalar hoy.</h2>
+      <h2 class="s-title">Elige tu plan.<br/>Empieza a crecer hoy.</h2>
     </div>
     <p class="s-sub">
-      Automatización lista para funcionar desde el primer día. Precio cerrado, sin sorpresas, sin permanencia.
+      Tu web profesional o tu sistema de automatización, listos para funcionar. Precio cerrado, sin sorpresas.
     </p>
   </div>
 
+  <div class="price-tabs reveal" role="tablist">
+    <button class="price-tab active" data-plan="web" role="tab">Páginas web</button>
+    <button class="price-tab" data-plan="auto" role="tab">Automatización IA</button>
+  </div>
+
+  <div class="price-panel" id="plans-web">
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <p class="price-name">Web Esencial</p>
+      <div class="price-amount">
+        <span class="price-num">390€</span>
+        <span class="price-period">pago único</span>
+      </div>
+      <p class="price-setup">Entrega en 7 días</p>
+      <p class="price-desc">Para negocios que aún no tienen web y necesitan aparecer en Google con una imagen profesional.</p>
+      <ul class="price-features">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Web de una página (landing) diseñada a medida</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Adaptada a móvil, tablet y ordenador</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Botón de WhatsApp y formulario de contacto</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Mapa, horario y enlaces a redes sociales</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dominio propio incluido el primer año</li>
+      </ul>
+      <a href="https://wa.me/34693848285?text=Hola%20Victor%2C%20quiero%20info%20de%20la%20Web%20Esencial" target="_blank" class="btn-outline price-cta">Quiero mi web</a>
+    </div>
+
+    <div class="price-card featured reveal" style="transition-delay:0.1s">
+      <span class="price-badge">Más popular</span>
+      <p class="price-name">Web Profesional</p>
+      <div class="price-amount">
+        <span class="price-num">790€</span>
+        <span class="price-period">pago único</span>
+      </div>
+      <p class="price-setup">Entrega en 10–14 días</p>
+      <p class="price-desc">La web completa que trabaja por ti: capta clientes, recoge reservas y la gestionas tú sin saber programar.</p>
+      <ul class="price-features">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Todo lo de Web Esencial</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Hasta 5 secciones (servicios, galería, equipo…)</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Sistema de reservas o solicitudes online</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Panel privado para ver tus contactos y valoraciones</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SEO local para salir en Google en tu ciudad</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 mes de cambios gratis tras la entrega</li>
+      </ul>
+      <a href="https://wa.me/34693848285?text=Hola%20Victor%2C%20quiero%20info%20de%20la%20Web%20Profesional" target="_blank" class="btn-gold price-cta">Empezar ahora</a>
+    </div>
+
+    <div class="price-card reveal" style="transition-delay:0.2s">
+      <p class="price-name">Web + IA</p>
+      <div class="price-amount">
+        <span class="price-num">1.190€</span>
+        <span class="price-period">pago único</span>
+      </div>
+      <p class="price-setup">+ 39€/mes del asistente IA</p>
+      <p class="price-desc">Web profesional con un asistente de IA que responde a tus clientes por WhatsApp las 24 horas.</p>
+      <ul class="price-features">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Todo lo de Web Profesional</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Bot de WhatsApp con IA entrenado en tu negocio</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Reservas automáticas en Google Calendar</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Diseño premium con animaciones</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Soporte prioritario por WhatsApp</li>
+      </ul>
+      <a href="https://wa.me/34693848285?text=Hola%20Victor%2C%20quiero%20info%20del%20plan%20Web%20+%20IA" target="_blank" class="btn-outline price-cta">Hablar con Victor</a>
+    </div>
+  </div>
+
+  <p class="pricing-note reveal" style="transition-delay:0.3s">50% al empezar · 50% al entregar · la web es 100% tuya · mantenimiento opcional desde 19€/mes</p>
+  </div>
+
+  <div class="price-panel" id="plans-auto" hidden>
   <div class="pricing-grid">
     <div class="price-card reveal">
       <p class="price-name">Starter</p>
@@ -1098,6 +1171,7 @@
   </div>
 
   <p class="pricing-note reveal" style="transition-delay:0.3s">Sin permanencia · cancela cuando quieras · soporte incluido en todos los planes</p>
+  </div>
 </section>
 
 <!-- PORTFOLIO -->
@@ -1131,7 +1205,7 @@
         </div>
         <h3 class="port-name">Mompofit — José Mompó</h3>
         <p class="port-desc">Web completa para entrenador personal. Panel de solicitudes de clientes, sistema de valoraciones, formulario de contacto y pasarela de leads conectada a base de datos en tiempo real.</p>
-        <a href="https://mompo-fit.vercel.app" class="port-link" target="_blank">
+        <a href="https://mompo.fit" class="port-link" target="_blank">
           Ver proyecto
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="5" y1="12" x2="19" y2="12"/>
@@ -2148,6 +2222,16 @@ function copyROI() {
     });
   }
 }
+</script>
+<script>
+document.querySelectorAll('.price-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.price-tab').forEach(function(t){t.classList.toggle('active',t===tab);});
+    document.getElementById('plans-web').hidden = tab.dataset.plan!=='web';
+    document.getElementById('plans-auto').hidden = tab.dataset.plan!=='auto';
+    document.querySelectorAll('#plans-'+tab.dataset.plan+' .reveal').forEach(function(el){el.classList.add('in');});
+  });
+});
 </script>
 </body>
 </html>
